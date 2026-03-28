@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+  Netlify Forms — static declarations
+  ─────────────────────────────────────────────────────────────────────────────
+  Netlify's build bot detects forms by crawling static HTML files.
+  Because this is a Next.js (React) site, forms are rendered client-side and
+  the bot never sees them. This hidden file declares all forms so Netlify
+  registers them at build time. It is never linked to from the site.
+  ─────────────────────────────────────────────────────────────────────────────
+-->
+<html lang="en">
+<head><meta charset="UTF-8"><title>Netlify Forms</title></head>
+<body>
+
+  <!-- /contact page form -->
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact" />
+    <input name="bot-field" />
+    <input name="name" />
+    <input name="email" />
+    <select name="subject">
+      <option value="general">General Enquiry</option>
+      <option value="order">Order Question</option>
+      <option value="press">Press &amp; Media</option>
+      <option value="stockist">Stockist Enquiry</option>
+      <option value="other">Something Else</option>
+    </select>
+    <textarea name="message"></textarea>
+  </form>
+
+  <!-- /where-to-buy wholesale enquiry form -->
+  <form name="wholesale-inquiry" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="wholesale-inquiry" />
+    <input name="bot-field" />
+    <input name="name" />
+    <input name="business" />
+    <input name="location" />
+    <textarea name="message"></textarea>
+  </form>
+
+</body>
+</html>
