@@ -196,7 +196,7 @@ export default function ContactPage() {
                   maxWidth:   '320px',
                   margin:     '0 auto',
                 }}>
-                  Thanks for reaching out — we'll be in touch soon. Keep an eye on your inbox.
+                  Thanks for reaching out — we&apos;ll be in touch soon. Keep an eye on your inbox.
                 </p>
               </div>
 
@@ -335,7 +335,7 @@ export default function ContactPage() {
                       color:      'var(--color-coral)',
                       lineHeight: 1.6,
                     }}>
-                      Something didn't go through — please try again or email us directly.
+                      Something didn&apos;t go through — please try again or email us directly.
                     </p>
                   )}
                 </div>
