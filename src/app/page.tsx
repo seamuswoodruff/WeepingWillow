@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /* ─────────────────────────────────────────────────────────────────────
    HEADLINE OPTIONS (pick one):
@@ -13,7 +13,6 @@ import { useEffect, useRef, useState } from 'react'
 ───────────────────────────────────────────────────────────────────── */
 
 export default function Home() {
-  const productRef  = useRef<HTMLElement>(null)
   // On first visit the preloader is running — hero tree fades in to cross-fade with it
   const [freshLoad, setFreshLoad] = useState(false)
 
@@ -23,9 +22,6 @@ export default function Home() {
     if (isFresh) setFreshLoad(true)
   }, [])
 
-  const scrollToProduct = () => {
-    productRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
 
   return (
     <>
@@ -155,7 +151,6 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════ */}
       <section
         id="product"
-        ref={productRef}
         style={{
           backgroundColor: 'var(--color-bg-surface)',
           padding: 'clamp(80px, 8vw, 120px) clamp(24px, 4vw, 48px)',
