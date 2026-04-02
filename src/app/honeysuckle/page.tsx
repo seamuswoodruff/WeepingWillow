@@ -1,12 +1,24 @@
 'use client'
 
 import Image from 'next/image'
+import ShopifyBuyButton from '@/components/ShopifyBuyButton'
 
 /* ── Ingredient data ── */
 const INGREDIENTS = [
   {
-    name: 'Raw Wildflower Honey',
-    note: 'Deep floral sweetness with a lingering golden warmth',
+    name: 'Water',
+    note: 'The base of every bottle. Clean and neutral — it carries everything else without getting in the way.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+        <path d="M16 4 C16 4 8 14 8 19 C8 23.4 11.6 27 16 27 C20.4 27 24 23.4 24 19 C24 14 16 4 16 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M11 21 C11 21 12 18 15 17.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.6"/>
+      </svg>
+    ),
+    color: '#7BAFC4',
+  },
+  {
+    name: 'Honey',
+    note: 'Natural sweetness with a warm floral character. The first flavour you notice — present from the first sip to the last.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
         <path d="M16 2 L20.4 9.8 L29.6 11.2 L23 17.6 L24.8 26.8 L16 22.2 L7.2 26.8 L9 17.6 L2.4 11.2 L11.6 9.8 Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
@@ -16,36 +28,8 @@ const INGREDIENTS = [
     color: 'var(--color-honey)',
   },
   {
-    name: 'Elderflower',
-    note: 'Delicate, fragrant — a whisper of summer garden at peak bloom',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="3" stroke="currentColor" strokeWidth="1.5"/>
-        <ellipse cx="16" cy="7" rx="3" ry="5" stroke="currentColor" strokeWidth="1.5"/>
-        <ellipse cx="16" cy="25" rx="3" ry="5" stroke="currentColor" strokeWidth="1.5"/>
-        <ellipse cx="7" cy="16" rx="5" ry="3" stroke="currentColor" strokeWidth="1.5"/>
-        <ellipse cx="25" cy="16" rx="5" ry="3" stroke="currentColor" strokeWidth="1.5"/>
-        <ellipse cx="9.5" cy="9.5" rx="3" ry="5" transform="rotate(45 9.5 9.5)" stroke="currentColor" strokeWidth="1.5"/>
-        <ellipse cx="22.5" cy="22.5" rx="3" ry="5" transform="rotate(45 22.5 22.5)" stroke="currentColor" strokeWidth="1.5"/>
-      </svg>
-    ),
-    color: 'var(--color-green)',
-  },
-  {
-    name: 'Fresh Lemon',
-    note: 'Bright citrus lift — sharp on entry, clean and long on the finish',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="10" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M16 6 L16 26 M6 16 L26 16 M8.9 8.9 L23.1 23.1 M23.1 8.9 L8.9 23.1" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
-        <circle cx="16" cy="16" r="3" stroke="currentColor" strokeWidth="1.5"/>
-      </svg>
-    ),
-    color: 'var(--color-honey-light)',
-  },
-  {
-    name: 'Ginger Root',
-    note: 'Warm, gentle heat — builds slowly from the back of the palate',
+    name: 'Ginger Juice',
+    note: 'Delivers the bold heat and satisfying spicy finish. Known to aid digestion and support immune health.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
         <path d="M8 24 C8 24 10 18 14 16 C18 14 22 15 24 12 C26 9 25 6 25 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -57,8 +41,20 @@ const INGREDIENTS = [
     color: 'var(--color-coral)',
   },
   {
+    name: 'Lemon Juice',
+    note: 'Bright acidity that balances the honey\'s sweetness and lifts the mid-palate.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="10" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M16 6 L16 26 M6 16 L26 16 M8.9 8.9 L23.1 23.1 M23.1 8.9 L8.9 23.1" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
+        <circle cx="16" cy="16" r="3" stroke="currentColor" strokeWidth="1.5"/>
+      </svg>
+    ),
+    color: 'var(--color-honey-light)',
+  },
+  {
     name: 'Gentian Bitters',
-    note: 'Botanical depth that grounds and gives the whole story its structure',
+    note: 'A traditional botanical bitter. Adds earthy depth and grounding complexity that keeps the sweetness in check.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
         <path d="M16 28 L16 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -70,12 +66,16 @@ const INGREDIENTS = [
     color: 'var(--color-green-dark)',
   },
   {
-    name: 'Spring Water',
-    note: 'Pure and clean — the quiet foundation that lets every note breathe',
+    name: 'Salt Water',
+    note: 'A small but important addition. Salt rounds out the other flavours and brings the whole drink into balance.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-        <path d="M16 4 C16 4 8 14 8 19 C8 23.4 11.6 27 16 27 C20.4 27 24 23.4 24 19 C24 14 16 4 16 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-        <path d="M11 21 C11 21 12 18 15 17.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.6"/>
+        <rect x="11" y="8" width="10" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M14 8 L14 5 M18 8 L18 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="16" cy="14" r="1.5" fill="currentColor" opacity="0.6"/>
+        <circle cx="16" cy="18" r="1" fill="currentColor" opacity="0.4"/>
+        <circle cx="14" cy="16" r="1" fill="currentColor" opacity="0.4"/>
+        <circle cx="18" cy="16" r="1" fill="currentColor" opacity="0.4"/>
       </svg>
     ),
     color: '#7BAFC4',
@@ -198,10 +198,10 @@ export default function HoneysucklePage() {
             maxWidth: '440px',
             position: 'relative',
           }}>
-            Raw wildflower honey and elderflower open the glass with quiet elegance.
-            Fresh lemon brightens the mid-palate, and ginger root carries a slow,
-            building warmth to the finish. Gentian bitters thread through everything —
-            making Honeysuckle feel complex, grounded, and completely unlike anything else.
+            Honey and lemon juice open with warm sweetness and bright acidity.
+            Ginger brings bold heat that builds through the finish — with real benefits
+            for digestion and immune health. Gentian bitters add earthy depth that
+            grounds the whole experience.
           </p>
 
           {/* Divider */}
@@ -211,86 +211,18 @@ export default function HoneysucklePage() {
             position: 'relative',
           }} />
 
-          {/* Price */}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', position: 'relative' }}>
-            <span style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(28px, 3vw, 36px)',
-              fontWeight: 400, letterSpacing: '-0.02em',
-              color: 'var(--color-text-dark)',
+          {/* Shopify Buy Button — price is pulled live from Shopify */}
+          <div>
+            <p style={{
+              fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+              color: 'var(--color-text-muted)', marginBottom: '10px',
             }}>
-              $XX.XX
-            </span>
-            <span style={{
-              fontFamily: 'var(--font-body)', fontSize: '12px',
-              color: 'var(--color-text-muted)', letterSpacing: '0.04em',
-            }}>
-              per bottle
-            </span>
+              Pack of 12 × 12 oz cans
+            </p>
+            <ShopifyBuyButton />
           </div>
 
-          {/* ── SHOPIFY BUY BUTTON EMBED ── */}
-          <div style={{ position: 'relative' }}>
-            {/* TODO: Replace this placeholder with the Shopify Buy Button embed script.
-                Instructions:
-                1. In your Shopify admin → Sales Channels → Buy Button
-                2. Create a button for Honeysuckle
-                3. Copy the embed code and replace the div below
-                4. Remove the placeholder button once the embed is live
-            */}
-            <div style={{
-              background: 'var(--color-bg-surface)',
-              border: '1.5px dashed var(--color-border)',
-              borderRadius: '12px',
-              padding: '20px 24px',
-              textAlign: 'center',
-            }}>
-              <p style={{
-                fontFamily: 'var(--font-body)', fontSize: '11px',
-                color: 'var(--color-text-muted)', letterSpacing: '0.1em',
-                textTransform: 'uppercase', marginBottom: '12px',
-              }}>
-                Shopify Buy Button — embed here
-              </p>
-              {/* Placeholder CTA */}
-              <button
-                style={{
-                  width: '100%',
-                  fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
-                  letterSpacing: '0.12em', textTransform: 'uppercase',
-                  color: 'var(--color-dark)', background: 'var(--color-honey)',
-                  padding: '15px 32px', borderRadius: '999px', border: 'none',
-                  cursor: 'pointer',
-                  transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms ease',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = 'var(--color-honey-light)'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 8px 28px rgba(200,145,42,0.32)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = 'var(--color-honey)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
-                Order Now
-              </button>
-            </div>
-          </div>
-
-          {/* Shipping note */}
-          <p style={{
-            fontFamily: 'var(--font-body)', fontSize: '12px',
-            color: 'var(--color-text-muted)', letterSpacing: '0.02em',
-            display: 'flex', alignItems: 'center', gap: '6px',
-            position: 'relative',
-          }}>
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M1 8h10M8 4l3 4-3 4M11 8h4v3l-1.5 1.5H13M11 8V5l-1-1H2L1 5v5"/>
-            </svg>
-            Free shipping on orders over $XX — placeholder
-          </p>
         </div>
       </section>
 
@@ -306,7 +238,7 @@ export default function HoneysucklePage() {
         {/* Background image at low opacity */}
         <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
           <Image
-            src="/images/lifestyle-2.jpg"
+            src="/images/serve-glass.jpg"
             alt=""
             fill
             style={{ objectFit: 'cover', objectPosition: 'center', opacity: 0.07 }}
@@ -352,7 +284,7 @@ export default function HoneysucklePage() {
               maxWidth: '480px',
               marginTop: '16px',
             }}>
-              Every ingredient in Honeysuckle was chosen for a reason. Nothing is there for sweetness alone.
+              Six ingredients. Each one chosen for both its flavour and the role it plays in the overall experience.
             </p>
           </div>
 
@@ -524,12 +456,18 @@ export default function HoneysucklePage() {
             height: 'clamp(240px, 30vw, 380px)',
             borderRadius: '16px',
             overflow: 'hidden',
+            background: '#B8ADA3',
           }}>
             <Image
-              src="/images/lifestyle-3.jpg"
+              src="/images/serve-glass-can.jpg"
               alt="Honeysuckle served over ice"
               fill
-              style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
+              style={{
+                objectFit: 'contain',
+                objectPosition: 'center bottom',
+                transform: 'scale(1.4) translateY(7%)',
+                transformOrigin: 'center bottom',
+              }}
             />
             <div aria-hidden style={{
               position: 'absolute', inset: 0,
@@ -555,114 +493,152 @@ export default function HoneysucklePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          4. FINAL CTA BANNER
+          4. ABOUT THE ARTIST
       ═══════════════════════════════════════════════════════════ */}
       <section style={{
-        background: 'var(--color-dark)',
-        padding: 'clamp(80px, 10vw, 128px) clamp(24px, 4vw, 48px)',
+        background: 'var(--color-bg-deep)',
+        padding: 'clamp(72px, 8vw, 112px) clamp(24px, 4vw, 48px)',
         position: 'relative',
         overflow: 'hidden',
-        textAlign: 'center',
+        borderTop: '1px solid var(--color-border-light)',
       }}>
-        {/* Background warmth */}
+        {/* Artist botanical background */}
+        <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+          <Image
+            src="/images/artist-background.png"
+            alt=""
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center', opacity: 0.35 }}
+          />
+        </div>
+        {/* Fade overlay to keep text readable */}
         <div aria-hidden style={{
           position: 'absolute', inset: 0,
-          background: `
-            radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,145,42,0.1) 0%, transparent 65%),
-            radial-gradient(ellipse 40% 40% at 10% 80%, rgba(107,147,88,0.06) 0%, transparent 55%)
-          `,
+          background: 'linear-gradient(90deg, rgba(250,243,224,0.6) 0%, rgba(250,243,224,0.3) 50%, rgba(250,243,224,0.6) 100%)',
           pointerEvents: 'none',
         }} />
 
-        {/* Background image very subtle */}
-        <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-          <Image
-            src="/images/product-hero.jpg"
-            alt=""
-            fill
-            style={{ objectFit: 'cover', objectPosition: 'center', opacity: 0.04 }}
-          />
-        </div>
+        <div style={{
+          maxWidth: '1280px', margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: '1fr 2fr',
+          gap: 'clamp(48px, 6vw, 96px)',
+          alignItems: 'center',
+          position: 'relative', zIndex: 1,
+        }} className="artist__grid">
 
-        {/* Grain */}
-        <div aria-hidden style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-          opacity: 0.025,
-        }} />
-
-        <div style={{ maxWidth: '720px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          {/* Ornament */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            gap: '16px', marginBottom: '32px',
-          }}>
-            <div style={{ width: '40px', height: '1px', background: 'rgba(200,145,42,0.4)' }} />
-            <span style={{ color: 'rgba(200,145,42,0.5)', fontSize: '12px' }}>✦</span>
-            <div style={{ width: '40px', height: '1px', background: 'rgba(200,145,42,0.4)' }} />
+          {/* Left: headshot */}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{
+              position: 'relative',
+              width: 'clamp(180px, 20vw, 260px)',
+              aspectRatio: '1 / 1',
+              borderRadius: '999px',
+              overflow: 'hidden',
+              flexShrink: 0,
+            }}>
+              <Image
+                src="/images/artist-clara-bossi-2.png"
+                alt="Clara Bossi"
+                fill
+                style={{ objectFit: 'cover', objectPosition: 'center 15%', opacity: 0.82 }}
+              />
+              {/* Soft radial fade to blend edges into background */}
+              <div aria-hidden style={{
+                position: 'absolute', inset: 0,
+                background: 'radial-gradient(circle, transparent 55%, rgba(250,243,224,0.35) 80%, rgba(250,243,224,0.75) 100%)',
+                borderRadius: '999px',
+              }} />
+            </div>
           </div>
 
-          <h2 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(36px, 5vw, 64px)',
-            fontWeight: 300, fontStyle: 'italic',
-            letterSpacing: '-0.02em', lineHeight: 1.05,
-            color: 'var(--color-cream)',
-            marginBottom: '20px',
-          }}>
-            Every sip was earned.
-            <br />
-            <span style={{ color: 'var(--color-honey-fill)' }}>This one&apos;s for you.</span>
-          </h2>
+          {/* Right: text */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                <div style={{ width: '24px', height: '1px', background: 'var(--color-honey)' }} />
+                <span style={{
+                  fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
+                  letterSpacing: '0.2em', textTransform: 'uppercase',
+                  color: 'var(--color-honey-dark)',
+                }}>
+                  The Art on the Can
+                </span>
+              </div>
+              <h2 style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(32px, 3.5vw, 52px)',
+                fontWeight: 300, fontStyle: 'italic',
+                letterSpacing: '-0.02em', lineHeight: 1.05,
+                color: 'var(--color-text-dark)',
+              }}>
+                Clara Bossi
+              </h2>
+            </div>
 
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: 'clamp(14px, 1.3vw, 16px)',
-            lineHeight: 1.75,
-            color: 'var(--color-cream-muted)',
-            maxWidth: '480px',
-            margin: '0 auto 40px',
-          }}>
-            Honeysuckle was made for the moments that deserve something real.
-            Complex, botanical, and completely non-alcoholic.
-          </p>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 'clamp(14px, 1.3vw, 16px)',
+              lineHeight: 1.8,
+              color: 'var(--color-text-mid)',
+              maxWidth: '560px',
+            }}>
+              [Artist bio — a few sentences about who they are, their practice, and how they came to create the artwork for Honeysuckle. This is a placeholder and should be replaced with the real artist&apos;s story.]
+            </p>
 
-          <button
-            style={{
-              fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
-              letterSpacing: '0.14em', textTransform: 'uppercase',
-              color: 'var(--color-dark)', background: 'var(--color-honey)',
-              padding: '16px 48px', borderRadius: '999px', border: 'none',
-              cursor: 'pointer',
-              transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms ease',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = 'var(--color-honey-light)'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 12px 36px rgba(200,145,42,0.4)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = 'var(--color-honey)'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = 'none'
-            }}
-          >
-            Order Honeysuckle
-          </button>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 'clamp(14px, 1.3vw, 16px)',
+              lineHeight: 1.8,
+              color: 'var(--color-text-mid)',
+              maxWidth: '560px',
+            }}>
+              [Second paragraph — more about the artistic process, inspiration, or connection to the brand. Optional.]
+            </p>
 
-          <p style={{
-            fontFamily: 'var(--font-body)', fontSize: '11px',
-            color: 'rgba(200,180,144,0.45)', letterSpacing: '0.08em',
-            marginTop: '20px',
-          }}>
-            Free shipping on orders over $XX · Placeholder
-          </p>
+            {/* Social / portfolio link placeholder */}
+            <a
+              href="#"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
+                letterSpacing: '0.12em', textTransform: 'uppercase',
+                color: 'var(--color-honey-dark)',
+                textDecoration: 'none',
+                borderBottom: '1px solid rgba(200,145,42,0.3)',
+                paddingBottom: '2px',
+                width: 'fit-content',
+                transition: 'color 180ms ease, border-color 180ms ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.color = 'var(--color-honey)'
+                e.currentTarget.style.borderColor = 'var(--color-honey)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.color = 'var(--color-honey-dark)'
+                e.currentTarget.style.borderColor = 'rgba(200,145,42,0.3)'
+              }}
+            >
+              View their work
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H5M9.5 2.5V7"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
       {/* Responsive styles */}
       <style>{`
         @media (max-width: 768px) {
+          .artist__grid {
+            grid-template-columns: 1fr !important;
+          }
+          .artist__grid > div:first-child {
+            align-items: flex-start !important;
+            flex-direction: row !important;
+            gap: 24px !important;
+          }
           .product-hero__grid {
             grid-template-columns: 1fr !important;
             min-height: unset !important;

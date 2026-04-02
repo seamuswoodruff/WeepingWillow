@@ -36,10 +36,10 @@ export default function OurStoryPage() {
       }}>
         {/* Atmospheric background image */}
         <Image
-          src="/images/lifestyle-1.jpg"
+          src="/images/our-story-hero-v3.jpg"
           alt="Weeping Willow Co. — Our Story"
           fill
-          style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
+          style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
           priority
         />
 
@@ -478,7 +478,7 @@ export default function OurStoryPage() {
             gap: 'clamp(32px, 5vw, 72px)',
           }} className="founder__grid">
 
-            {/* ── Founder 1 ── */}
+            {/* ── Founder 1 — Aidan Stark-Chessa ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               <div style={{ display: 'flex', gap: 'clamp(24px, 3vw, 40px)', alignItems: 'flex-start' }} className="founder-card__inner">
                 {/* Hexagon portrait */}
@@ -491,10 +491,10 @@ export default function OurStoryPage() {
                     boxShadow: '0 16px 40px rgba(154,109,24,0.18)',
                   }}>
                     <Image
-                      src="/images/lifestyle-2.jpg"
-                      alt="Co-founder of Weeping Willow Co."
+                      src="/images/aidan-stark-chessa.png"
+                      alt="Aidan Stark-Chessa, co-founder of Weeping Willow Co."
                       fill
-                      style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                      style={{ objectFit: 'cover', objectPosition: 'center 20%', transform: 'scale(1.3)', transformOrigin: 'center 20%' }}
                     />
                     <div aria-hidden style={{
                       position: 'absolute', inset: 0,
@@ -503,7 +503,7 @@ export default function OurStoryPage() {
                   </div>
                 </div>
 
-                {/* Bio text */}
+                {/* Name & role */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingTop: '6px' }}>
                   <div>
                     <p style={{
@@ -512,14 +512,14 @@ export default function OurStoryPage() {
                       letterSpacing: '-0.01em', color: 'var(--color-text-dark)',
                       lineHeight: 1.1, marginBottom: '4px',
                     }}>
-                      [Founder Name]
+                      Aidan Stark-Chessa
                     </p>
                     <p style={{
                       fontFamily: 'var(--font-body)', fontSize: '11px',
                       letterSpacing: '0.12em', textTransform: 'uppercase',
                       color: 'var(--color-honey-dark)',
                     }}>
-                      Co-Founder — [Role Placeholder]
+                      Co-Founder &amp; Creator
                     </p>
                   </div>
                 </div>
@@ -531,14 +531,14 @@ export default function OurStoryPage() {
                   fontSize: 'clamp(14px, 1.2vw, 15px)',
                   lineHeight: 1.8, color: 'var(--color-text-mid)',
                 }}>
-                  [Founder Name] spent years working in [relevant industry — food, hospitality, etc.] before turning a personal frustration into a craft project and, eventually, a company. The combination of a trained palate and genuine stubbornness about quality is what makes Honeysuckle taste the way it does.
+                  A Portland, Maine-based bartender and server, Aidan developed Honeysuckle to address the lack of high-quality non-alcoholic options on the market. He began refining the formula in his dorm room during his sophomore year at Bates College — and after perfecting the blend, pitched his concept to Bobcat Ventures to secure the funding needed to produce the first batch.
                 </p>
                 <p style={{
                   fontFamily: 'var(--font-body)',
                   fontSize: 'clamp(14px, 1.2vw, 15px)',
                   lineHeight: 1.8, color: 'var(--color-text-mid)',
                 }}>
-                  Outside of Weeping Willow Co., [he/she/they] [personal detail — something warm and human]. The same attention that goes into that goes into every batch of Honeysuckle.
+                  A Philosophy major specialising in Rhetoric and Gender and Race Studies, Aidan is committed to using Honeysuckle to drive real social change — offering a sophisticated alternative that doesn&apos;t ask anyone to compromise. Outside of Weeping Willow Co., he spends his time surfing, skiing, and finding excuses to be outdoors.
                 </p>
               </div>
 
@@ -551,12 +551,12 @@ export default function OurStoryPage() {
                   fontSize: '20px', fontStyle: 'italic', fontWeight: 300,
                   color: 'var(--color-honey-dark)', letterSpacing: '-0.01em',
                 }}>
-                  [Founder Name]
+                  Aidan
                 </p>
               </div>
             </div>
 
-            {/* ── Founder 2 ── */}
+            {/* ── Founder 2 — Seamus Woodruff ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               <div style={{ display: 'flex', gap: 'clamp(24px, 3vw, 40px)', alignItems: 'flex-start' }} className="founder-card__inner">
                 {/* Hexagon portrait */}
@@ -569,10 +569,10 @@ export default function OurStoryPage() {
                     boxShadow: '0 16px 40px rgba(154,109,24,0.18)',
                   }}>
                     <Image
-                      src="/images/lifestyle-3.jpg"
-                      alt="Co-founder of Weeping Willow Co."
+                      src="/images/seamus-woodruff.png"
+                      alt="Seamus Woodruff, co-founder of Weeping Willow Co."
                       fill
-                      style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                      style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
                     />
                     <div aria-hidden style={{
                       position: 'absolute', inset: 0,
@@ -581,7 +581,7 @@ export default function OurStoryPage() {
                   </div>
                 </div>
 
-                {/* Bio text */}
+                {/* Name & role */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingTop: '6px' }}>
                   <div>
                     <p style={{
@@ -590,14 +590,14 @@ export default function OurStoryPage() {
                       letterSpacing: '-0.01em', color: 'var(--color-text-dark)',
                       lineHeight: 1.1, marginBottom: '4px',
                     }}>
-                      [Founder Name]
+                      Seamus Woodruff
                     </p>
                     <p style={{
                       fontFamily: 'var(--font-body)', fontSize: '11px',
                       letterSpacing: '0.12em', textTransform: 'uppercase',
                       color: 'var(--color-honey-dark)',
                     }}>
-                      Co-Founder — [Role Placeholder]
+                      Co-Founder
                     </p>
                   </div>
                 </div>
@@ -609,14 +609,7 @@ export default function OurStoryPage() {
                   fontSize: 'clamp(14px, 1.2vw, 15px)',
                   lineHeight: 1.8, color: 'var(--color-text-mid)',
                 }}>
-                  [Founder Name] brought [complementary skill — operations, design, brand, etc.] to Weeping Willow Co. after years of [relevant background]. Where the product obsession comes from one direction, the care that goes into how it reaches you comes from the other.
-                </p>
-                <p style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: 'clamp(14px, 1.2vw, 15px)',
-                  lineHeight: 1.8, color: 'var(--color-text-mid)',
-                }}>
-                  Outside of the company, [he/she/they] [personal detail]. It&apos;s a small team, and that&apos;s intentional — every decision about Honeysuckle goes through people who care deeply about the outcome.
+                  Seamus&apos;s story coming soon.
                 </p>
               </div>
 
@@ -629,7 +622,7 @@ export default function OurStoryPage() {
                   fontSize: '20px', fontStyle: 'italic', fontWeight: 300,
                   color: 'var(--color-honey-dark)', letterSpacing: '-0.01em',
                 }}>
-                  [Founder Name]
+                  Seamus
                 </p>
               </div>
             </div>

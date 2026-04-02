@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /* ─────────────────────────────────────────────────────────────────────
    HEADLINE OPTIONS (pick one):
@@ -13,7 +13,15 @@ import { useRef } from 'react'
 ───────────────────────────────────────────────────────────────────── */
 
 export default function Home() {
-  const productRef = useRef<HTMLElement>(null)
+  const productRef  = useRef<HTMLElement>(null)
+  // On first visit the preloader is running — hero tree fades in to cross-fade with it
+  const [freshLoad, setFreshLoad] = useState(false)
+
+  useEffect(() => {
+    const isFresh = !sessionStorage.getItem('wwco-fresh')
+    sessionStorage.setItem('wwco-fresh', '1')
+    if (isFresh) setFreshLoad(true)
+  }, [])
 
   const scrollToProduct = () => {
     productRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -94,80 +102,34 @@ export default function Home() {
               and crafted for those who refuse to settle for something forgettable.
             </p>
 
-            {/* CTAs */}
-            <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '8px' }}>
-              <button
-                onClick={scrollToProduct}
-                style={{
-                  fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
-                  letterSpacing: '0.12em', textTransform: 'uppercase',
-                  color: 'var(--color-dark)', background: 'var(--color-honey)',
-                  padding: '13px 28px', borderRadius: '999px', border: 'none',
-                  cursor: 'pointer', whiteSpace: 'nowrap',
-                  transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms ease',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = 'var(--color-honey-light)'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(200,145,42,0.3)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = 'var(--color-honey)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
-                Discover Honeysuckle
-              </button>
-              <Link
-                href="/honeysuckle"
-                style={{
-                  fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500,
-                  letterSpacing: '0.12em', textTransform: 'uppercase',
-                  color: 'var(--color-text-dark)',
-                  padding: '12px 28px', borderRadius: '999px',
-                  border: '1.5px solid rgba(26,15,6,0.25)',
-                  textDecoration: 'none', whiteSpace: 'nowrap',
-                  transition: 'border-color 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
-                  display: 'inline-block',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'var(--color-text-dark)'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(26,15,6,0.25)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }}
-              >
-                Order Now
-              </Link>
-            </div>
           </div>
 
-          {/* Product image */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div style={{
-              position: 'relative', width: '100%', maxWidth: '460px',
-              aspectRatio: '4/5',
-              borderRadius: '200px 200px 160px 160px',
-              overflow: 'hidden',
-              boxShadow: '0 24px 80px rgba(154,109,24,0.2), 0 8px 24px rgba(0,0,0,0.1)',
-            }}>
-              <Image
-                src="/images/product-hero.jpg"
-                alt="Honeysuckle premium mocktail by Weeping Willow Co."
-                fill
-                style={{ objectFit: 'cover', objectPosition: 'center' }}
-                priority
-              />
-              {/* Warm color wash overlay */}
-              <div aria-hidden style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(160deg, rgba(245,201,106,0.12) 0%, rgba(200,145,42,0.08) 50%, transparent 80%)',
-                mixBlendMode: 'multiply',
-              }} />
-            </div>
+          {/* Brand mark */}
+          <div id="hero-tree" style={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            position: 'relative',
+            // On first visit: start hidden, fade in right as the preloader tree lands and fades out
+            // Preloader: move 0.75s + fade delay 0.72s → starts fading at 3.52s from page load
+            animation: freshLoad ? 'hero-tree-in 0.3s ease-out 3.5s both' : 'none',
+          }}>
+            {/* Warm radial glow behind the icon */}
+            <div aria-hidden style={{
+              position: 'absolute', inset: '-20%',
+              background: 'radial-gradient(ellipse 70% 70% at 50% 55%, rgba(200,145,42,0.18) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }} />
+            <img
+              src="/images/willow-icon.svg"
+              alt="Weeping Willow Co."
+              style={{
+                width: '100%',
+                maxWidth: 'clamp(260px, 36vw, 480px)',
+                height: 'auto',
+                display: 'block',
+                opacity: 0.82,
+                position: 'relative',
+              }}
+            />
           </div>
         </div>
 
@@ -255,15 +217,14 @@ export default function Home() {
               fontFamily: 'var(--font-body)', fontSize: 'clamp(14px, 1.3vw, 16px)',
               lineHeight: 1.75, color: 'var(--color-text-mid)', margin: 0,
             }}>
-              Honeysuckle opens with the brightness of fresh citrus and
-              wildflower honey, then unfolds into a warm, rounded middle —
-              earthy gentian bitters grounding the sweetness before a long,
-              clean finish that keeps you reaching for another sip.
+              Honeysuckle is designed to emulate the sophisticated experience of a cocktail while replacing alcohol&apos;s negative effects with the restorative benefits of ginger, such as aiding digestion and supporting immune health. As you sip, you will discover the sweet warmth of honey harmonizing with bright lemon acidity. The experience concludes with the bold heat of ginger and the grounding, earthy notes of gentian.
+              <br /><br />
+              Overall, Honeysuckle is a bright, full-bodied beverage with a strong floral profile and a satisfyingly spicy finish. We recommend savoring it slowly; take small sips and allow the complex layers of flavor to wash over your palate.
             </p>
 
             {/* Flavor callouts */}
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              {['Raw Honey', 'Citrus', 'Elderflower', 'Gentian Bitters'].map(note => (
+              {['Raw Honey', 'Citrus', 'Ginger', 'Gentian Bitters'].map(note => (
                 <span key={note} style={{
                   fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
                   letterSpacing: '0.1em', textTransform: 'uppercase',
@@ -338,7 +299,7 @@ export default function Home() {
           position: 'absolute', inset: 0, zIndex: 0,
         }}>
           <Image
-            src="/images/lifestyle-1.jpg"
+            src="/images/craft-bg.jpg"
             alt=""
             fill
             style={{ objectFit: 'cover', objectPosition: 'center', opacity: 0.25 }}
@@ -381,10 +342,10 @@ export default function Home() {
             lineHeight: 1.8, color: 'var(--color-cream-muted)',
             maxWidth: '580px', margin: 0,
           }}>
-            Every batch of Honeysuckle is built the same way — slowly, carefully,
-            and without shortcuts. We source raw wildflower honey and real botanicals
-            because the difference is one you can taste. This is a drink that rewards
-            your attention.
+            Every batch we make is built the same way — slowly, carefully, and without
+            shortcuts. We use honey instead of refined sweeteners and real juices instead
+            of artificial flavors, because the difference is one you can taste and feel.
+            This is a drink that rewards your attention.
           </p>
 
           <p style={{
@@ -397,90 +358,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════
-          4. BRAND VALUES — three columns
-      ═══════════════════════════════════════════════════════════ */}
-      <section
-        id="values"
-        style={{
-          backgroundColor: 'var(--color-bg-deep)',
-          padding: 'clamp(80px, 8vw, 120px) clamp(24px, 4vw, 48px)',
-        }}
-      >
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-
-          {/* Section label */}
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: '16px',
-            marginBottom: 'clamp(48px, 5vw, 72px)',
-          }}>
-            <span style={{
-              fontFamily: 'var(--font-body)', fontSize: '10px', fontWeight: 500,
-              letterSpacing: '0.22em', textTransform: 'uppercase',
-              color: 'var(--color-honey-dark)',
-            }}>What We Stand For</span>
-            <div style={{ flex: 1, height: '1px', background: 'rgba(154,109,24,0.2)' }} />
-          </div>
-
-          <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 'clamp(32px, 4vw, 64px)',
-          }} className="values__grid">
-            {[
-              {
-                number: '01',
-                heading: 'Complex by Design',
-                body: 'Every flavour note in Honeysuckle is intentional — layered from the first sip to the last, because depth is what makes a drink worth returning to.',
-                accent: 'var(--color-honey)',
-              },
-              {
-                number: '02',
-                heading: 'Nothing Compromised',
-                body: 'No artificial flavours. No shortcuts. Choosing not to drink should never mean settling for something that feels like an afterthought.',
-                accent: 'var(--color-green)',
-              },
-              {
-                number: '03',
-                heading: 'Made for the Moment',
-                body: 'Honeysuckle belongs at the dinner table, the rooftop party, and the quiet evening in equal measure. Every occasion is the right occasion.',
-                accent: 'var(--color-coral)',
-              },
-            ].map(({ number, heading, body, accent }) => (
-              <div key={number} style={{
-                display: 'flex', flexDirection: 'column', gap: '20px',
-                padding: 'clamp(28px, 3vw, 40px)',
-                background: 'var(--color-bg-surface)',
-                borderRadius: 'var(--radius-lg)',
-                border: '1px solid rgba(154,109,24,0.1)',
-              }}>
-                <span style={{
-                  fontFamily: 'var(--font-heading)', fontSize: '48px',
-                  fontWeight: 300, lineHeight: 1, color: accent, opacity: 0.4,
-                  letterSpacing: '-0.03em',
-                }}>
-                  {number}
-                </span>
-                <h3 style={{
-                  fontFamily: 'var(--font-heading)',
-                  fontSize: 'clamp(22px, 2vw, 28px)',
-                  fontWeight: 400, fontStyle: 'italic',
-                  lineHeight: 1.2, letterSpacing: '-0.01em',
-                  color: 'var(--color-text-dark)', margin: 0,
-                }}>
-                  {heading}
-                </h3>
-                <p style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: 'clamp(13px, 1.1vw, 15px)',
-                  lineHeight: 1.75, color: 'var(--color-text-mid)', margin: 0,
-                }}>
-                  {body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ═══════════════════════════════════════════════════════════
           5. EMAIL SIGNUP — Netlify Forms
@@ -600,17 +477,19 @@ export default function Home() {
 
       {/* Responsive styles */}
       <style>{`
+        @keyframes hero-tree-in {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
         @media (max-width: 768px) {
           .hero__grid {
             grid-template-columns: 1fr !important;
           }
           .hero__grid > div:last-child {
-            max-height: 360px;
+            max-width: 280px;
+            margin: 0 auto;
           }
           .spotlight__grid {
-            grid-template-columns: 1fr !important;
-          }
-          .values__grid {
             grid-template-columns: 1fr !important;
           }
         }

@@ -67,7 +67,7 @@ export default function ContactPage() {
             1. PAGE HERO
         ───────────────────────────────────────────────────────── */}
         <section style={{
-          padding:  'clamp(72px, 10vw, 120px) clamp(24px, 5vw, 48px) clamp(40px, 5vw, 64px)',
+          padding:  'clamp(40px, 5vw, 64px) clamp(24px, 5vw, 48px) clamp(40px, 5vw, 64px)',
           textAlign: 'center',
           position:  'relative',
           overflow:  'hidden',
@@ -81,41 +81,21 @@ export default function ContactPage() {
             `,
           }} />
 
-          {/* Botanical glyph */}
+          {/* Willow icon glyph */}
           <div aria-hidden style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            <svg width="44" height="52" viewBox="0 0 44 52" fill="none">
-              {/* Stem */}
-              <line x1="22" y1="52" x2="22" y2="26" stroke="rgba(107,147,88,0.32)" strokeWidth="1" strokeLinecap="round"/>
-              {/* Leaf body */}
-              <path d="M22 8 C22 8, 12 18, 12 26 C12 34, 17 40, 22 40 C27 40, 32 34, 32 26 C32 18, 22 8, 22 8 Z"
-                fill="rgba(107,147,88,0.07)" stroke="rgba(107,147,88,0.35)" strokeWidth="1"/>
-              {/* Centre vein */}
-              <line x1="22" y1="10" x2="22" y2="40" stroke="rgba(107,147,88,0.2)" strokeWidth="0.75" strokeLinecap="round"/>
-              {/* Side veins */}
-              <path d="M22 22 C19 20, 14 21, 14 21" stroke="rgba(107,147,88,0.2)" strokeWidth="0.75" strokeLinecap="round"/>
-              <path d="M22 28 C25 26, 30 27, 30 27" stroke="rgba(107,147,88,0.2)" strokeWidth="0.75" strokeLinecap="round"/>
-              {/* Side leaves */}
-              <path d="M22 32 C18 28, 10 31, 10 31 C10 31, 14 36, 22 32 Z"
-                fill="rgba(107,147,88,0.05)" stroke="rgba(107,147,88,0.22)" strokeWidth="0.75"/>
-              <path d="M22 36 C26 32, 34 35, 34 35 C34 35, 30 40, 22 36 Z"
-                fill="rgba(107,147,88,0.05)" stroke="rgba(107,147,88,0.22)" strokeWidth="0.75"/>
-            </svg>
+            <img
+              src="/images/willow-icon.svg"
+              alt=""
+              style={{
+                width: '68px',
+                height: 'auto',
+                // Tint black SVG to match the leaf green (rgb(107,147,88)) at ~35% opacity
+                filter: 'invert(54%) sepia(28%) saturate(480%) hue-rotate(63deg) brightness(88%) contrast(85%) opacity(0.38)',
+              }}
+            />
           </div>
 
-          {/* Eyebrow */}
-          <p style={{
-            fontFamily:    'var(--font-body)',
-            fontSize:      '10px',
-            fontWeight:    500,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color:         'var(--color-green)',
-            marginBottom:  '16px',
-          }}>
-            Get in touch
-          </p>
-
-          {/* Headline — warm, not corporate */}
+          {/* Headline */}
           <h1 style={{
             fontFamily:    'var(--font-heading)',
             fontSize:      'clamp(48px, 9vw, 80px)',
@@ -123,23 +103,11 @@ export default function ContactPage() {
             fontStyle:     'italic',
             letterSpacing: '-0.03em',
             lineHeight:    1.02,
-            color:         'var(--color-text-dark)',
-            marginBottom:  '20px',
+            color:         'var(--color-green)',
+            margin:        0,
           }}>
-            Say hello.
+            Get in touch
           </h1>
-
-          {/* Subtext */}
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize:   'clamp(15px, 1.6vw, 17px)',
-            color:      'var(--color-text-muted)',
-            lineHeight: 1.7,
-            maxWidth:   '360px',
-            margin:     '0 auto',
-          }}>
-            We read every message ourselves and write back within 48 hours — usually sooner.
-          </p>
         </section>
 
 
@@ -345,162 +313,13 @@ export default function ContactPage() {
         </section>
 
 
-        {/* ─────────────────────────────────────────────────────────
-            3. ALTERNATIVE CONTACT
-        ───────────────────────────────────────────────────────── */}
-        <section style={{
-          padding: '0 clamp(24px, 5vw, 48px) clamp(72px, 9vw, 104px)',
-        }}>
-          <div style={{
-            maxWidth:       '480px',
-            margin:         '0 auto',
-            display:        'flex',
-            flexDirection:  'column',
-            alignItems:     'center',
-            gap:            '22px',
-          }}>
-            {/* Ornamental rule */}
-            <div style={{
-              display:    'flex',
-              alignItems: 'center',
-              gap:        '16px',
-              width:      '100%',
-            }}>
-              <div style={{ flex: 1, height: '1px', background: 'var(--color-border-light)' }} />
-              <span style={{
-                fontFamily:    'var(--font-heading)',
-                fontStyle:     'italic',
-                fontSize:      '14px',
-                fontWeight:    300,
-                color:         'var(--color-text-muted)',
-                letterSpacing: '0.03em',
-                whiteSpace:    'nowrap',
-              }}>
-                or find us here
-              </span>
-              <div style={{ flex: 1, height: '1px', background: 'var(--color-border-light)' }} />
-            </div>
-
-            {/* Direct email */}
-            <a
-              href="mailto:hello@weepingwillowco.com"
-              style={{
-                fontFamily:    'var(--font-body)',
-                fontSize:      '14px',
-                fontWeight:    400,
-                letterSpacing: '0.01em',
-                color:         'var(--color-text-muted)',
-                textDecoration:'none',
-                transition:    'color 150ms ease',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-honey-dark)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-text-muted)')}
-            >
-              hello@weepingwillowco.com
-            </a>
-
-            {/* Social buttons */}
-            <div style={{ display: 'flex', gap: '10px' }}>
-
-              {/* Instagram */}
-              <a
-                href="https://instagram.com"
-                aria-label="Follow us on Instagram"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="alt-social"
-                style={{
-                  display:        'inline-flex',
-                  alignItems:     'center',
-                  gap:            '8px',
-                  fontFamily:     'var(--font-body)',
-                  fontSize:       '12px',
-                  fontWeight:     500,
-                  letterSpacing:  '0.04em',
-                  color:          'var(--color-text-muted)',
-                  textDecoration: 'none',
-                  padding:        '10px 18px',
-                  borderRadius:   '999px',
-                  border:         '1px solid var(--color-border-light)',
-                  transition:     'color 180ms ease, border-color 180ms ease, background 180ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget
-                  el.style.color        = 'var(--color-text-dark)'
-                  el.style.borderColor  = 'rgba(200,145,42,0.38)'
-                  el.style.background   = 'rgba(200,145,42,0.06)'
-                  el.style.transform    = 'translateY(-2px)'
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget
-                  el.style.color        = 'var(--color-text-muted)'
-                  el.style.borderColor  = 'var(--color-border-light)'
-                  el.style.background   = 'transparent'
-                  el.style.transform    = 'translateY(0)'
-                }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                  <circle cx="12" cy="12" r="4"/>
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-                </svg>
-                Instagram
-              </a>
-
-              {/* TikTok */}
-              <a
-                href="https://tiktok.com"
-                aria-label="Follow us on TikTok"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="alt-social"
-                style={{
-                  display:        'inline-flex',
-                  alignItems:     'center',
-                  gap:            '8px',
-                  fontFamily:     'var(--font-body)',
-                  fontSize:       '12px',
-                  fontWeight:     500,
-                  letterSpacing:  '0.04em',
-                  color:          'var(--color-text-muted)',
-                  textDecoration: 'none',
-                  padding:        '10px 18px',
-                  borderRadius:   '999px',
-                  border:         '1px solid var(--color-border-light)',
-                  transition:     'color 180ms ease, border-color 180ms ease, background 180ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget
-                  el.style.color        = 'var(--color-text-dark)'
-                  el.style.borderColor  = 'rgba(200,145,42,0.38)'
-                  el.style.background   = 'rgba(200,145,42,0.06)'
-                  el.style.transform    = 'translateY(-2px)'
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget
-                  el.style.color        = 'var(--color-text-muted)'
-                  el.style.borderColor  = 'var(--color-border-light)'
-                  el.style.background   = 'transparent'
-                  el.style.transform    = 'translateY(0)'
-                }}
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.19 8.19 0 0 0 4.79 1.52V6.75a4.85 4.85 0 0 1-1.02-.06z"/>
-                </svg>
-                TikTok
-              </a>
-
-            </div>
-          </div>
-        </section>
 
 
         {/* ─────────────────────────────────────────────────────────
             4. CLOSING NOTE
         ───────────────────────────────────────────────────────── */}
         <section style={{
-          padding:   'clamp(32px, 4vw, 48px) clamp(24px, 5vw, 48px) clamp(72px, 9vw, 104px)',
+          padding:   'clamp(12px, 2vw, 20px) clamp(24px, 5vw, 48px) clamp(48px, 6vw, 72px)',
           textAlign: 'center',
         }}>
           {/* Ornamental mark */}

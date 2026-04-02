@@ -6,28 +6,20 @@ import { useState } from 'react'
 
 const STOCKISTS = [
   {
-    name: '[Store Name]',
-    area: '[Neighborhood], [City]',
-    note: 'Available in store',
-    tag: 'Bottle Shop',
+    name: 'Morning Glory',
+    area: 'Brunswick, Maine',
+    tag: 'Health Food Store',
+    logo: '/images/stockist-morning-glory.png',
+    href: 'https://www.moglonf.com',
+    overlayColor: 'rgba(20, 12, 4, 0.55)',
   },
   {
-    name: '[Store Name]',
-    area: '[Neighborhood], [City]',
-    note: 'Available in store and online',
-    tag: 'Specialty Grocer',
-  },
-  {
-    name: '[Store Name]',
-    area: '[City]',
-    note: 'Available at the bar and to take home',
-    tag: 'Restaurant & Bar',
-  },
-  {
-    name: '[Store Name]',
-    area: '[Neighborhood], [City]',
-    note: 'Available in store',
-    tag: 'Natural Foods',
+    name: 'Brickyard Brands',
+    area: 'Portland, Maine',
+    tag: 'Distributor',
+    logo: '/images/stockist-brickyard-brands.png',
+    href: 'https://www.brickyardbrands.com',
+    overlayColor: 'rgba(10, 6, 2, 0.45)',
   },
 ]
 
@@ -203,72 +195,106 @@ export default function WhereToBuyPage() {
           {/* Stockist grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 'clamp(12px, 1.5vw, 20px)',
+            gridTemplateColumns: 'repeat(2, minmax(0, clamp(200px, 26vw, 340px)))',
+            gap: 'clamp(16px, 2vw, 28px)',
             marginBottom: '32px',
           }} className="stockists__grid">
             {STOCKISTS.map((s, i) => (
-              <div
+              <a
                 key={i}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  background: 'var(--color-bg-deep)',
-                  border: '1px solid var(--color-border-light)',
-                  borderRadius: '16px',
-                  padding: 'clamp(20px, 2vw, 28px)',
-                  display: 'flex', flexDirection: 'column', gap: '12px',
-                  transition: 'border-color 200ms ease, box-shadow 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  aspectRatio: '1 / 1',
+                  borderRadius: '20px',
+                  overflow: 'hidden',
+                  textDecoration: 'none',
+                  border: '1px solid rgba(200,145,42,0.12)',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+                  transition: 'transform 260ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 260ms ease, border-color 260ms ease',
                 }}
                 onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLDivElement
-                  el.style.borderColor = 'rgba(200,145,42,0.3)'
-                  el.style.boxShadow = '0 8px 24px rgba(154,109,24,0.1)'
-                  el.style.transform = 'translateY(-2px)'
+                  const el = e.currentTarget as HTMLAnchorElement
+                  el.style.transform = 'translateY(-4px)'
+                  el.style.boxShadow = '0 16px 48px rgba(0,0,0,0.22)'
+                  el.style.borderColor = 'rgba(200,145,42,0.35)'
                 }}
                 onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLDivElement
-                  el.style.borderColor = 'rgba(154,109,24,0.1)'
-                  el.style.boxShadow = 'none'
+                  const el = e.currentTarget as HTMLAnchorElement
                   el.style.transform = 'translateY(0)'
+                  el.style.boxShadow = '0 4px 24px rgba(0,0,0,0.12)'
+                  el.style.borderColor = 'rgba(200,145,42,0.12)'
                 }}
               >
-                <span style={{
-                  display: 'inline-block',
-                  fontFamily: 'var(--font-body)', fontSize: '10px',
-                  fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
-                  color: 'var(--color-green-dark)',
-                  background: 'rgba(107,147,88,0.1)',
-                  border: '1px solid rgba(107,147,88,0.2)',
-                  borderRadius: '999px', padding: '3px 10px',
-                  alignSelf: 'flex-start',
+                {/* Logo background */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  backgroundImage: `url(${s.logo})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  transition: 'transform 400ms ease',
+                }} className="stockist-card__bg" />
+
+                {/* Dark gradient overlay */}
+                <div aria-hidden style={{
+                  position: 'absolute', inset: 0,
+                  background: `linear-gradient(to top, ${s.overlayColor} 0%, rgba(0,0,0,0.1) 60%, transparent 100%)`,
+                }} />
+
+                {/* Visit link indicator */}
+                <div style={{
+                  position: 'absolute', top: '16px', right: '16px',
+                  width: '32px', height: '32px', borderRadius: '999px',
+                  background: 'rgba(255,255,255,0.15)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255,255,255,0.25)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  {s.tag}
-                </span>
-                <div>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2.5 9.5L9.5 2.5M9.5 2.5H5M9.5 2.5V7"/>
+                  </svg>
+                </div>
+
+                {/* Card content */}
+                <div style={{
+                  position: 'relative', zIndex: 1,
+                  padding: 'clamp(16px, 2vw, 24px)',
+                  display: 'flex', flexDirection: 'column', gap: '6px',
+                }}>
+                  <span style={{
+                    display: 'inline-block', alignSelf: 'flex-start',
+                    fontFamily: 'var(--font-body)', fontSize: '10px',
+                    fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
+                    color: 'rgba(245,201,106,0.9)',
+                    background: 'rgba(200,145,42,0.2)',
+                    border: '1px solid rgba(200,145,42,0.35)',
+                    borderRadius: '999px', padding: '3px 10px',
+                    backdropFilter: 'blur(6px)',
+                  }}>
+                    {s.tag}
+                  </span>
                   <p style={{
                     fontFamily: 'var(--font-heading)',
-                    fontSize: 'clamp(17px, 1.6vw, 20px)',
+                    fontSize: 'clamp(20px, 2vw, 26px)',
                     fontWeight: 400, fontStyle: 'italic',
-                    letterSpacing: '-0.01em', color: 'var(--color-text-dark)',
-                    lineHeight: 1.2, marginBottom: '4px',
+                    letterSpacing: '-0.01em', color: '#fff',
+                    lineHeight: 1.15,
                   }}>
                     {s.name}
                   </p>
                   <p style={{
                     fontFamily: 'var(--font-body)', fontSize: '12px',
-                    color: 'var(--color-text-muted)', letterSpacing: '0.03em',
+                    color: 'rgba(255,255,255,0.65)', letterSpacing: '0.04em',
                   }}>
                     {s.area}
                   </p>
                 </div>
-                <p style={{
-                  fontFamily: 'var(--font-body)', fontSize: '12px',
-                  lineHeight: 1.55, color: 'var(--color-text-mid)',
-                  borderTop: '1px solid var(--color-border-light)',
-                  paddingTop: '10px',
-                }}>
-                  {s.note}
-                </p>
-              </div>
+              </a>
             ))}
           </div>
 
@@ -372,7 +398,6 @@ export default function WhereToBuyPage() {
               </p>
               {[
                 'Minimum order quantities that work for small retailers',
-                'Competitive wholesale pricing',
                 'Support with in-store merchandising and education',
                 'A direct line to the founders — no middlemen',
               ].map((item, i) => (
@@ -529,192 +554,6 @@ export default function WhereToBuyPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          4. ONLINE — ORDER DIRECT
-      ═══════════════════════════════════════════════════════════ */}
-      <section style={{
-        background: 'var(--color-bg-deep)',
-        padding: 'clamp(64px, 7vw, 96px) clamp(24px, 4vw, 48px)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
-            <div style={{ width: '28px', height: '1px', background: 'var(--color-honey)' }} />
-            <span style={{
-              fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
-              letterSpacing: '0.2em', textTransform: 'uppercase',
-              color: 'var(--color-honey-dark)',
-            }}>
-              Order Online
-            </span>
-          </div>
-
-          {/* Premium order card */}
-          <div style={{
-            background: 'var(--color-dark)',
-            borderRadius: '24px',
-            overflow: 'hidden',
-            position: 'relative',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-          }} className="order-card__grid">
-
-            {/* Left: image panel */}
-            <div style={{ position: 'relative', minHeight: '420px' }}>
-              <Image
-                src="/images/product-hero.jpg"
-                alt="Order Honeysuckle direct"
-                fill
-                style={{ objectFit: 'cover', objectPosition: 'center' }}
-              />
-              <div aria-hidden style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(90deg, transparent 50%, rgba(28,17,10,0.7) 100%)',
-              }} />
-              {/* Label badge */}
-              <div style={{
-                position: 'absolute', top: '28px', left: '28px',
-                background: 'rgba(26,15,6,0.7)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(200,145,42,0.3)',
-                borderRadius: '999px',
-                padding: '6px 16px',
-                display: 'inline-flex', alignItems: 'center', gap: '6px',
-              }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '999px', background: 'var(--color-green-light)' }} />
-                <span style={{
-                  fontFamily: 'var(--font-body)', fontSize: '10px',
-                  fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
-                  color: 'var(--color-cream)',
-                }}>
-                  Available Now
-                </span>
-              </div>
-            </div>
-
-            {/* Right: order details */}
-            <div style={{
-              padding: 'clamp(36px, 4vw, 56px)',
-              display: 'flex', flexDirection: 'column', gap: '28px',
-              justifyContent: 'center',
-              position: 'relative',
-            }}>
-              {/* Subtle warm glow */}
-              <div aria-hidden style={{
-                position: 'absolute', top: '-80px', right: '-80px',
-                width: '360px', height: '360px',
-                background: 'radial-gradient(circle, rgba(200,145,42,0.08) 0%, transparent 65%)',
-                pointerEvents: 'none',
-              }} />
-
-              <div>
-                <p style={{
-                  fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
-                  letterSpacing: '0.2em', textTransform: 'uppercase',
-                  color: 'var(--color-honey)', marginBottom: '10px',
-                }}>
-                  Weeping Willow Co.
-                </p>
-                <h2 style={{
-                  fontFamily: 'var(--font-heading)',
-                  fontSize: 'clamp(32px, 3.5vw, 48px)',
-                  fontWeight: 300, fontStyle: 'italic',
-                  letterSpacing: '-0.02em', lineHeight: 1.05,
-                  color: 'var(--color-cream)',
-                  marginBottom: '16px',
-                }}>
-                  Order direct.<br />
-                  <span style={{ color: 'var(--color-honey-fill)' }}>Always the freshest batch.</span>
-                </h2>
-                <p style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: 'clamp(14px, 1.2vw, 15px)',
-                  lineHeight: 1.75,
-                  color: 'var(--color-cream-muted)',
-                  maxWidth: '380px',
-                }}>
-                  When you order from us directly, you&apos;re getting the latest production run — no sitting in a warehouse, no compromised freshness. It also means more of your money goes back into what we&apos;re building.
-                </p>
-              </div>
-
-              {/* Divider */}
-              <div style={{
-                height: '1px',
-                background: 'linear-gradient(90deg, rgba(200,145,42,0.2) 0%, transparent 80%)',
-              }} />
-
-              {/* Price */}
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
-                <span style={{
-                  fontFamily: 'var(--font-heading)',
-                  fontSize: 'clamp(28px, 3vw, 36px)',
-                  fontWeight: 400, letterSpacing: '-0.02em',
-                  color: 'var(--color-cream)',
-                }}>
-                  $XX.XX
-                </span>
-                <span style={{
-                  fontFamily: 'var(--font-body)', fontSize: '12px',
-                  color: 'rgba(200,180,144,0.5)', letterSpacing: '0.04em',
-                }}>
-                  per bottle
-                </span>
-              </div>
-
-              {/* ── SHOPIFY BUY BUTTON EMBED ── */}
-              {/*
-                TODO: Replace the placeholder button below with the Shopify Buy Button embed.
-                Steps:
-                1. Shopify Admin → Sales Channels → Buy Button
-                2. Create a button for Honeysuckle
-                3. Paste the embed code here and remove the placeholder <button>
-              */}
-              <button
-                style={{
-                  width: '100%',
-                  fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
-                  letterSpacing: '0.12em', textTransform: 'uppercase',
-                  color: 'var(--color-dark)', background: 'var(--color-honey)',
-                  padding: '15px 32px', borderRadius: '999px', border: 'none',
-                  cursor: 'pointer',
-                  transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms ease',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = 'var(--color-honey-light)'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 10px 28px rgba(200,145,42,0.35)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = 'var(--color-honey)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
-                Order Now — Shopify embed placeholder
-              </button>
-
-              {/* Shipping + delivery info */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {[
-                  { icon: '→', text: 'Free shipping on orders over $XX — placeholder' },
-                  { icon: '→', text: 'Estimated delivery: X–X business days — placeholder' },
-                ].map(item => (
-                  <p key={item.text} style={{
-                    fontFamily: 'var(--font-body)', fontSize: '12px',
-                    color: 'rgba(200,180,144,0.45)', letterSpacing: '0.02em',
-                    display: 'flex', alignItems: 'flex-start', gap: '8px',
-                  }}>
-                    <span style={{ color: 'rgba(200,145,42,0.4)', flexShrink: 0, marginTop: '1px' }}>{item.icon}</span>
-                    {item.text}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
           5. CLOSING SECTION
       ═══════════════════════════════════════════════════════════ */}
       <section style={{
@@ -804,7 +643,7 @@ export default function WhereToBuyPage() {
             min-height: 280px !important;
           }
           .stockists__grid {
-            grid-template-columns: 1fr 1fr !important;
+            grid-template-columns: minmax(0, 340px) !important;
           }
           .wholesale__grid {
             grid-template-columns: 1fr !important;
@@ -816,10 +655,8 @@ export default function WhereToBuyPage() {
             text-align: left !important;
           }
         }
-        @media (max-width: 480px) {
-          .stockists__grid {
-            grid-template-columns: 1fr !important;
-          }
+        .stockist-card__bg:hover {
+          transform: scale(1.04);
         }
       `}</style>
     </>
