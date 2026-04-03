@@ -15,6 +15,23 @@ import { useEffect, useState } from 'react'
 export default function Home() {
   // On first visit the preloader is running — hero tree fades in to cross-fade with it
   const [freshLoad, setFreshLoad] = useState(false)
+  const [signupStatus, setSignupStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+
+  async function handleSignupSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setSignupStatus('sending')
+    const data = new FormData(e.currentTarget)
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      })
+      setSignupStatus(res.ok ? 'sent' : 'error')
+    } catch {
+      setSignupStatus('error')
+    }
+  }
 
   useEffect(() => {
     const isFresh = !sessionStorage.getItem('wwco-fresh')
@@ -383,68 +400,79 @@ export default function Home() {
           </p>
 
           {/* Netlify Form */}
-          <form
-            name="honeysuckle-signup"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            style={{
-              display: 'flex', gap: '10px', width: '100%',
-              maxWidth: '480px', flexWrap: 'wrap',
-            }}
-          >
-            <input type="hidden" name="form-name" value="honeysuckle-signup" />
-            {/* Honeypot */}
-            <p style={{ display: 'none' }}>
-              <label>Don&apos;t fill this out: <input name="bot-field" /></label>
+          {signupStatus === 'sent' ? (
+            <p style={{
+              fontFamily: 'var(--font-body)', fontSize: '15px',
+              color: 'var(--color-honey-dark)', letterSpacing: '0.01em',
+            }}>
+              You&apos;re on the list — we&apos;ll be in touch.
             </p>
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Your email address"
-              required
+          ) : (
+            <form
+              name="honeysuckle-signup"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              onSubmit={handleSignupSubmit}
               style={{
-                flex: 1, minWidth: '200px',
-                fontFamily: 'var(--font-body)', fontSize: '14px',
-                color: 'var(--color-text-dark)',
-                background: 'rgba(250,243,224,0.8)',
-                border: '1.5px solid rgba(154,109,24,0.2)',
-                borderRadius: '999px', padding: '13px 20px',
-                outline: 'none',
-                transition: 'border-color 150ms ease, box-shadow 150ms ease',
-              }}
-              onFocus={e => {
-                e.currentTarget.style.borderColor = 'var(--color-honey)'
-                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(200,145,42,0.12)'
-              }}
-              onBlur={e => {
-                e.currentTarget.style.borderColor = 'rgba(154,109,24,0.2)'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
-                letterSpacing: '0.1em', textTransform: 'uppercase',
-                color: 'var(--color-dark)', background: 'var(--color-honey)',
-                padding: '13px 24px', borderRadius: '999px', border: 'none',
-                cursor: 'pointer', whiteSpace: 'nowrap',
-                transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = 'var(--color-honey-dark)'
-                e.currentTarget.style.transform = 'translateY(-1px)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'var(--color-honey)'
-                e.currentTarget.style.transform = 'translateY(0)'
+                display: 'flex', gap: '10px', width: '100%',
+                maxWidth: '480px', flexWrap: 'wrap',
               }}
             >
-              Notify Me
-            </button>
-          </form>
+              <input type="hidden" name="form-name" value="honeysuckle-signup" />
+              <p style={{ display: 'none' }}>
+                <label>Don&apos;t fill this out: <input name="bot-field" /></label>
+              </p>
+              <input
+                type="email"
+                name="email"
+                placeholder="Your email address"
+                required
+                disabled={signupStatus === 'sending'}
+                style={{
+                  flex: 1, minWidth: '200px',
+                  fontFamily: 'var(--font-body)', fontSize: '14px',
+                  color: 'var(--color-text-dark)',
+                  background: 'rgba(250,243,224,0.8)',
+                  border: '1.5px solid rgba(154,109,24,0.2)',
+                  borderRadius: '999px', padding: '13px 20px',
+                  outline: 'none',
+                  transition: 'border-color 150ms ease, box-shadow 150ms ease',
+                }}
+                onFocus={e => {
+                  e.currentTarget.style.borderColor = 'var(--color-honey)'
+                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(200,145,42,0.12)'
+                }}
+                onBlur={e => {
+                  e.currentTarget.style.borderColor = 'rgba(154,109,24,0.2)'
+                  e.currentTarget.style.boxShadow = 'none'
+                }}
+              />
+              <button
+                type="submit"
+                disabled={signupStatus === 'sending'}
+                style={{
+                  fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
+                  letterSpacing: '0.1em', textTransform: 'uppercase',
+                  color: 'var(--color-dark)', background: 'var(--color-honey)',
+                  padding: '13px 24px', borderRadius: '999px', border: 'none',
+                  cursor: signupStatus === 'sending' ? 'default' : 'pointer',
+                  whiteSpace: 'nowrap',
+                  transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = 'var(--color-honey-dark)'
+                  e.currentTarget.style.transform = 'translateY(-1px)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'var(--color-honey)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                }}
+              >
+                {signupStatus === 'sending' ? 'Sending…' : 'Notify Me'}
+              </button>
+            </form>
+          )}
 
           <p style={{
             fontFamily: 'var(--font-body)', fontSize: '11px',

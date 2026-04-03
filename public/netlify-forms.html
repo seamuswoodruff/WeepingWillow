@@ -12,6 +12,13 @@
 <head><meta charset="UTF-8"><title>Netlify Forms</title></head>
 <body>
 
+  <!-- homepage email signup -->
+  <form name="honeysuckle-signup" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="honeysuckle-signup" />
+    <input name="bot-field" />
+    <input name="email" type="email" />
+  </form>
+
   <!-- /contact page form -->
   <form name="contact" netlify netlify-honeypot="bot-field" hidden>
     <input type="hidden" name="form-name" value="contact" />
