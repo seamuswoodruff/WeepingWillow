@@ -142,7 +142,7 @@ export default function OurStoryPage() {
                 letterSpacing: '-0.02em', lineHeight: 1.1,
                 color: 'var(--color-text-dark)',
               }}>
-                A gap I couldn&apos;t stop thinking about.
+                A gap we couldn&apos;t stop thinking about.
               </h2>
             </div>
 
@@ -152,28 +152,35 @@ export default function OurStoryPage() {
                 fontSize: 'clamp(15px, 1.3vw, 17px)',
                 lineHeight: 1.8, color: 'var(--color-text-mid)',
               }}>
-                I&apos;ve always been drawn to the ritual of a good drink — the way a well-made cocktail can punctuate an evening, signal that the day is done, or make a quiet Tuesday feel like an occasion. But a few years ago, I started cutting back on alcohol. Not dramatically. Just thoughtfully. And I immediately ran into a problem.
+                There is something to be said for the ritual of a good drink. Whether sharing a beer with co-workers after a long shift, enjoying a stimulating drink on your way to class or work, or finding that special drink that compliments your meal perfectly, a good drink is a simple luxury that is irreplaceable in our current society.
               </p>
               <p style={{
                 fontFamily: 'var(--font-body)',
                 fontSize: 'clamp(15px, 1.3vw, 17px)',
                 lineHeight: 1.8, color: 'var(--color-text-mid)',
               }}>
-                There was nothing worth drinking. Not really. The non-alcoholic options at bars and restaurants ranged from sad to saccharine — sugary mocktails with no depth, sparkling waters dressed up with a garnish, or diet versions of things I didn&apos;t want in the first place. I kept waiting for someone to solve this. Nobody did.
+                But many of us are making the conscious choice to cut back on alcohol for a variety of reasons. However, we found that all of the non-alcoholic options on the market felt more like watered-down versions of their alcoholic siblings than something that truly shines on its own and does justice to the choice of leaving alcohol behind. This is the problem we kept bumping into.
               </p>
               <p style={{
                 fontFamily: 'var(--font-body)',
                 fontSize: 'clamp(15px, 1.3vw, 17px)',
                 lineHeight: 1.8, color: 'var(--color-text-mid)',
               }}>
-                So I started experimenting in my kitchen. Infusions, botanicals, bitters, honey from a local farm. I made dozens of batches that were either too sweet, too sharp, or just too one-dimensional. Then one evening, I got it right. Something with layers — opening floral, mid-citrus brightness, a long warm finish from ginger and gentian. That batch became Honeysuckle.
+                We didn&apos;t want sugary mocktails with no depth, sparkling waters dressed up with a garnish, or diet versions of things we didn&apos;t want in the first place. We kept waiting for someone to solve this. Nobody did.
               </p>
               <p style={{
                 fontFamily: 'var(--font-body)',
                 fontSize: 'clamp(15px, 1.3vw, 17px)',
                 lineHeight: 1.8, color: 'var(--color-text-mid)',
               }}>
-                Weeping Willow Co. exists because I believe the choice not to drink shouldn&apos;t mean choosing something forgettable. It should mean choosing something better.
+                So our founders got to work and started experimenting in their kitchens with infusions, botanicals, bitters, and honey from a local farm. We made dozens of batches that were either too sweet, too sharp, or just too one-dimensional. Then one evening, we got it right. Something with layers—opening floral, mid-citrus brightness, and a long warm finish from ginger and gentian. That batch became Honeysuckle.
+              </p>
+              <p style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'clamp(15px, 1.3vw, 17px)',
+                lineHeight: 1.8, color: 'var(--color-text-mid)',
+              }}>
+                Weeping Willow Co. exists because we believe the choice not to drink shouldn&apos;t mean choosing something forgettable. It should mean choosing something better.
               </p>
             </div>
 
@@ -227,106 +234,6 @@ export default function OurStoryPage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════
-          3. THE NAME
-      ═══════════════════════════════════════════════════════════ */}
-      <section style={{
-        background: 'var(--color-dark)',
-        padding: 'clamp(80px, 10vw, 128px) clamp(24px, 4vw, 48px)',
-        position: 'relative',
-        overflow: 'hidden',
-        textAlign: 'center',
-      }}>
-        {/* Background warmth */}
-        <div aria-hidden style={{
-          position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse 60% 70% at 50% 50%, rgba(200,145,42,0.07) 0%, transparent 65%)',
-          pointerEvents: 'none',
-        }} />
-
-        {/* Botanical illustration placeholder — decorative ring */}
-        <div aria-hidden style={{
-          position: 'absolute',
-          top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 'clamp(300px, 40vw, 560px)',
-          height: 'clamp(300px, 40vw, 560px)',
-          borderRadius: '999px',
-          border: '1px solid rgba(200,145,42,0.06)',
-          pointerEvents: 'none',
-        }} />
-        <div aria-hidden style={{
-          position: 'absolute',
-          top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 'clamp(220px, 30vw, 420px)',
-          height: 'clamp(220px, 30vw, 420px)',
-          borderRadius: '999px',
-          border: '1px solid rgba(200,145,42,0.04)',
-          pointerEvents: 'none',
-        }} />
-
-        <div style={{
-          maxWidth: '720px', margin: '0 auto',
-          position: 'relative', zIndex: 1,
-        }}>
-          {/* Ornament */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            gap: '16px', marginBottom: '36px',
-          }}>
-            <div style={{ width: '40px', height: '1px', background: 'rgba(200,145,42,0.35)' }} />
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(200,145,42,0.5)" strokeWidth="1">
-              <path d="M12 2 C12 2 6 8 6 13 C6 16.3 8.7 19 12 19 C15.3 19 18 16.3 18 13 C18 8 12 2 12 2Z"/>
-              <path d="M12 19 L12 22"/>
-              <path d="M9 16 C7 14 7 11 9 9"/>
-            </svg>
-            <div style={{ width: '40px', height: '1px', background: 'rgba(200,145,42,0.35)' }} />
-          </div>
-
-          <h2 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(32px, 4vw, 52px)',
-            fontWeight: 300, fontStyle: 'italic',
-            letterSpacing: '-0.02em', lineHeight: 1.05,
-            color: 'var(--color-cream)',
-            marginBottom: '36px',
-          }}>
-            Why the Weeping Willow?
-          </h2>
-
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: 'clamp(15px, 1.4vw, 17px)',
-            lineHeight: 1.85,
-            color: 'var(--color-cream-muted)',
-            marginBottom: '24px',
-          }}>
-            The weeping willow is one of the most quietly remarkable trees. Its branches trail the ground without apology — graceful, unhurried, unbothered by the weight they carry. It thrives near water. It bends in wind without breaking. There&apos;s a kind of resilience in that, and a kind of beauty, that we try to bring to everything we make.
-          </p>
-
-          <p style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: 'clamp(15px, 1.4vw, 17px)',
-            lineHeight: 1.85,
-            color: 'var(--color-cream-muted)',
-          }}>
-            It also just felt right. Understated. A little unexpected. Something you might walk past a hundred times before you really look at it — and then wonder how you ever missed it. That&apos;s exactly what we hope Honeysuckle feels like on the palate.
-          </p>
-
-          {/* Italic closing line */}
-          <p style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(18px, 2vw, 24px)',
-            fontStyle: 'italic', fontWeight: 300,
-            color: 'rgba(245,201,106,0.7)',
-            letterSpacing: '-0.01em',
-            marginTop: '40px',
-          }}>
-            Resilient. Natural. Quietly sophisticated.
-          </p>
-        </div>
-      </section>
 
       {/* ═══════════════════════════════════════════════════════════
           4. OUR VALUES

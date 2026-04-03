@@ -129,21 +129,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <div style={{
-          position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
-          zIndex: 1,
-        }}>
-          <span style={{
-            fontFamily: 'var(--font-body)', fontSize: '10px', fontWeight: 500,
-            letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)',
-          }}>Scroll</span>
-          <div style={{
-            width: '1px', height: '40px',
-            background: 'linear-gradient(to bottom, var(--color-honey), transparent)',
-          }} />
-        </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
@@ -219,7 +204,7 @@ export default function Home() {
 
             {/* Flavor callouts */}
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              {['Raw Honey', 'Citrus', 'Ginger', 'Gentian Bitters'].map(note => (
+              {['Honey', 'Lemon', 'Ginger', 'Gentian Bitters'].map(note => (
                 <span key={note} style={{
                   fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 500,
                   letterSpacing: '0.1em', textTransform: 'uppercase',

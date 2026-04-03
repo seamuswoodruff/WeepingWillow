@@ -115,27 +115,22 @@ export default function WhereToBuyPage() {
             </p>
           </div>
 
-          {/* Product image accent */}
+          {/* Hero image */}
           <div style={{
             position: 'relative',
-            width: 'clamp(120px, 12vw, 180px)',
-            aspectRatio: '1/2',
-            borderRadius: '999px',
+            width: 'clamp(280px, 38vw, 520px)',
+            aspectRatio: '4/3',
+            borderRadius: 'clamp(20px, 2.5vw, 36px)',
             overflow: 'hidden',
             flexShrink: 0,
-            boxShadow: '0 16px 48px rgba(154,109,24,0.15)',
           }} className="hero__product-img">
             <Image
-              src="/images/product-1.jpg"
-              alt="Honeysuckle"
+              src="/images/where-to-find.jpg"
+              alt="Find Honeysuckle"
               fill
               style={{ objectFit: 'cover', objectPosition: 'center' }}
               priority
             />
-            <div aria-hidden style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(180deg, rgba(200,145,42,0.08) 0%, rgba(26,15,6,0.15) 100%)',
-            }} />
           </div>
         </div>
       </section>

@@ -583,17 +583,7 @@ export default function HoneysucklePage() {
               color: 'var(--color-text-mid)',
               maxWidth: '560px',
             }}>
-              [Artist bio — a few sentences about who they are, their practice, and how they came to create the artwork for Honeysuckle. This is a placeholder and should be replaced with the real artist&apos;s story.]
-            </p>
-
-            <p style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: 'clamp(14px, 1.3vw, 16px)',
-              lineHeight: 1.8,
-              color: 'var(--color-text-mid)',
-              maxWidth: '560px',
-            }}>
-              [Second paragraph — more about the artistic process, inspiration, or connection to the brand. Optional.]
+              Clara Bossi is a midcoast Maine based artist creating an ongoing body of work in various media. Her paintings, prints, murals, and sculptural lamp designs draw on the landscapes and botanicals of her home state.
             </p>
 
             {/* Social / portfolio link placeholder */}
@@ -619,7 +609,7 @@ export default function HoneysucklePage() {
                 e.currentTarget.style.borderColor = 'rgba(200,145,42,0.3)'
               }}
             >
-              View their work
+              View her work
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2.5 9.5L9.5 2.5M9.5 2.5H5M9.5 2.5V7"/>
               </svg>
