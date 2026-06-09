@@ -1,21 +1,12 @@
 # ─── Netlify Configuration for Next.js (honeysuckle-site) ───────────────────
 
 [build]
-  # If your GitHub repo root is the parent folder (e.g. HoneySuckle/),
-  # uncomment the line below so Netlify runs the build inside this subfolder:
-  # base    = "honeysuckle-site"
-  #
-  # If your GitHub repo root IS this folder (honeysuckle-site/), leave it commented.
   command   = "npm run build"
-  publish   = ".next"
+  publish   = "out"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION            = "20"
   NEXT_TELEMETRY_DISABLED = "1"
-
-# Next.js on Netlify requires the Next.js Runtime plugin
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 # ─── Redirects / Headers ────────────────────────────────────────────────────
 

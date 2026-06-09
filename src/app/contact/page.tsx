@@ -2,8 +2,6 @@
 
 import { useState } from 'react'
 
-type FormStatus = 'idle' | 'sending' | 'sent' | 'error'
-
 /* ── Shared style helpers ── */
 const labelStyle: React.CSSProperties = {
   fontFamily:    'var(--font-body)',
@@ -16,7 +14,6 @@ const labelStyle: React.CSSProperties = {
 }
 
 export default function ContactPage() {
-  const [formStatus,   setFormStatus]   = useState<FormStatus>('idle')
   const [focusedField, setFocusedField] = useState<string | null>(null)
 
   /* ── Field style — updates per focus ── */
@@ -42,22 +39,6 @@ export default function ContactPage() {
     appearance:   'none' as const,
     WebkitAppearance: 'none' as const,
   })
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setFormStatus('sending')
-    const data = new FormData(e.currentTarget)
-    try {
-      const res = await fetch('/', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body:    new URLSearchParams(data as unknown as Record<string, string>).toString(),
-      })
-      setFormStatus(res.ok ? 'sent' : 'error')
-    } catch {
-      setFormStatus('error')
-    }
-  }
 
   return (
     <>
@@ -89,7 +70,6 @@ export default function ContactPage() {
               style={{
                 width: '68px',
                 height: 'auto',
-                // Tint black SVG to match the leaf green (rgb(107,147,88)) at ~35% opacity
                 filter: 'invert(54%) sepia(28%) saturate(480%) hue-rotate(63deg) brightness(88%) contrast(85%) opacity(0.38)',
               }}
             />
@@ -119,196 +99,128 @@ export default function ContactPage() {
         }}>
           <div style={{ maxWidth: '580px', margin: '0 auto' }}>
 
-            {formStatus === 'sent' ? (
+            <form
+              name="contact"
+              method="POST"
+              action="/contact/success"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
+            >
+              {/* Netlify hidden fields */}
+              <input type="hidden" name="form-name" value="contact" />
+              <div style={{ display: 'none' }}>
+                <label>Skip: <input name="bot-field" /></label>
+              </div>
 
-              /* ── Success state ── */
-              <div style={{
-                textAlign:    'center',
-                padding:      'clamp(56px, 7vw, 88px) clamp(32px, 5vw, 64px)',
-                background:   'var(--color-bg-surface)',
-                borderRadius: '16px',
-                border:       '1px solid var(--color-border-light)',
-                boxShadow:    '0 4px 32px rgba(200,145,42,0.08), 0 1px 6px rgba(0,0,0,0.04)',
+              {/* Name + Email row */}
+              <div className="contact-grid" style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '16px',
               }}>
-                <div style={{
-                  display: 'flex', justifyContent: 'center', marginBottom: '24px',
-                }}>
-                  <div style={{
-                    width: '56px', height: '56px', borderRadius: '50%',
-                    background: 'rgba(107,147,88,0.10)',
-                    border:     '1px solid rgba(107,147,88,0.28)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={labelStyle}>
+                    Name <span style={{ color: 'var(--color-honey)', fontStyle: 'normal' }}>*</span>
+                  </label>
+                  <input
+                    type="text" name="name" required
+                    placeholder="Your name"
+                    style={field('name')}
+                    onFocus={() => setFocusedField('name')}
+                    onBlur={()  => setFocusedField(null)}
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={labelStyle}>
+                    Email <span style={{ color: 'var(--color-honey)', fontStyle: 'normal' }}>*</span>
+                  </label>
+                  <input
+                    type="email" name="email" required
+                    placeholder="your@email.com"
+                    style={field('email')}
+                    onFocus={() => setFocusedField('email')}
+                    onBlur={()  => setFocusedField(null)}
+                  />
+                </div>
+              </div>
+
+              {/* Subject dropdown */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={labelStyle}>Subject</label>
+                <div style={{ position: 'relative' }}>
+                  <select
+                    name="subject"
+                    defaultValue="general"
+                    style={{ ...field('subject'), cursor: 'pointer', paddingRight: '42px' }}
+                    onFocus={() => setFocusedField('subject')}
+                    onBlur={()  => setFocusedField(null)}
+                  >
+                    <option value="general">General Enquiry</option>
+                    <option value="order">Order Question</option>
+                    <option value="press">Press &amp; Media</option>
+                    <option value="stockist">Stockist Enquiry</option>
+                    <option value="other">Something Else</option>
+                  </select>
+                  {/* Custom chevron */}
+                  <div aria-hidden style={{
+                    position:      'absolute',
+                    right:         '15px',
+                    top:           '50%',
+                    transform:     'translateY(-50%)',
+                    pointerEvents: 'none',
+                    color:         'var(--color-text-muted)',
                   }}>
-                    <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
-                      <path d="M2 8 L8 14 L20 2" stroke="var(--color-green)" strokeWidth="1.75"
+                    <svg width="11" height="7" viewBox="0 0 11 7" fill="none">
+                      <path d="M1 1L5.5 5.5L10 1" stroke="currentColor" strokeWidth="1.5"
                         strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                 </div>
-                <h3 style={{
-                  fontFamily:    'var(--font-heading)',
-                  fontSize:      'clamp(26px, 3vw, 34px)',
-                  fontWeight:    400,
-                  fontStyle:     'italic',
-                  letterSpacing: '-0.02em',
-                  color:         'var(--color-text-dark)',
-                  marginBottom:  '12px',
-                }}>
-                  Message received.
-                </h3>
-                <p style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize:   '15px',
-                  color:      'var(--color-text-muted)',
-                  lineHeight: 1.7,
-                  maxWidth:   '320px',
-                  margin:     '0 auto',
-                }}>
-                  Thanks for reaching out — we&apos;ll be in touch soon. Keep an eye on your inbox.
-                </p>
               </div>
 
-            ) : (
+              {/* Message textarea */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={labelStyle}>
+                  Message <span style={{ color: 'var(--color-honey)', fontStyle: 'normal' }}>*</span>
+                </label>
+                <textarea
+                  name="message" required
+                  placeholder="Tell us what's on your mind…"
+                  rows={7}
+                  style={{ ...field('message'), resize: 'vertical', minHeight: '148px' }}
+                  onFocus={() => setFocusedField('message')}
+                  onBlur={()  => setFocusedField(null)}
+                />
+              </div>
 
-              /* ── Form ── */
-              <form
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                onSubmit={handleSubmit}
-                style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
-              >
-                {/* Netlify hidden fields */}
-                <input type="hidden" name="form-name" value="contact" />
-                <div style={{ display: 'none' }}>
-                  <label>Skip: <input name="bot-field" /></label>
-                </div>
+              {/* Submit */}
+              <div style={{ paddingTop: '4px' }}>
+                <button
+                  type="submit"
+                  className="contact-submit"
+                  style={{
+                    width:         '100%',
+                    fontFamily:    'var(--font-body)',
+                    fontSize:      '11px',
+                    fontWeight:    600,
+                    letterSpacing: '0.14em',
+                    textTransform: 'uppercase',
+                    color:         'var(--color-dark)',
+                    background:    'var(--color-honey)',
+                    border:       'none',
+                    borderRadius: '999px',
+                    padding:      '18px 40px',
+                    cursor:       'pointer',
+                    boxShadow:    '0 4px 20px rgba(200,145,42,0.22), 0 1px 4px rgba(200,145,42,0.12)',
+                    transition:   'background 200ms ease, box-shadow 200ms ease, transform 150ms cubic-bezier(0.34,1.56,0.64,1)',
+                  }}
+                >
+                  Send Message →
+                </button>
+              </div>
+            </form>
 
-                {/* Name + Email row */}
-                <div className="contact-grid" style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '16px',
-                }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={labelStyle}>
-                      Name <span style={{ color: 'var(--color-honey)', fontStyle: 'normal' }}>*</span>
-                    </label>
-                    <input
-                      type="text" name="name" required
-                      placeholder="Your name"
-                      style={field('name')}
-                      onFocus={() => setFocusedField('name')}
-                      onBlur={()  => setFocusedField(null)}
-                    />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={labelStyle}>
-                      Email <span style={{ color: 'var(--color-honey)', fontStyle: 'normal' }}>*</span>
-                    </label>
-                    <input
-                      type="email" name="email" required
-                      placeholder="your@email.com"
-                      style={field('email')}
-                      onFocus={() => setFocusedField('email')}
-                      onBlur={()  => setFocusedField(null)}
-                    />
-                  </div>
-                </div>
-
-                {/* Subject dropdown */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={labelStyle}>Subject</label>
-                  <div style={{ position: 'relative' }}>
-                    <select
-                      name="subject"
-                      defaultValue="general"
-                      style={{ ...field('subject'), cursor: 'pointer', paddingRight: '42px' }}
-                      onFocus={() => setFocusedField('subject')}
-                      onBlur={()  => setFocusedField(null)}
-                    >
-                      <option value="general">General Enquiry</option>
-                      <option value="order">Order Question</option>
-                      <option value="press">Press &amp; Media</option>
-                      <option value="stockist">Stockist Enquiry</option>
-                      <option value="other">Something Else</option>
-                    </select>
-                    {/* Custom chevron */}
-                    <div aria-hidden style={{
-                      position:      'absolute',
-                      right:         '15px',
-                      top:           '50%',
-                      transform:     'translateY(-50%)',
-                      pointerEvents: 'none',
-                      color:         'var(--color-text-muted)',
-                    }}>
-                      <svg width="11" height="7" viewBox="0 0 11 7" fill="none">
-                        <path d="M1 1L5.5 5.5L10 1" stroke="currentColor" strokeWidth="1.5"
-                          strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Message textarea */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={labelStyle}>
-                    Message <span style={{ color: 'var(--color-honey)', fontStyle: 'normal' }}>*</span>
-                  </label>
-                  <textarea
-                    name="message" required
-                    placeholder="Tell us what's on your mind…"
-                    rows={7}
-                    style={{ ...field('message'), resize: 'vertical', minHeight: '148px' }}
-                    onFocus={() => setFocusedField('message')}
-                    onBlur={()  => setFocusedField(null)}
-                  />
-                </div>
-
-                {/* Submit */}
-                <div style={{ paddingTop: '4px' }}>
-                  <button
-                    type="submit"
-                    disabled={formStatus === 'sending'}
-                    className="contact-submit"
-                    style={{
-                      width:         '100%',
-                      fontFamily:    'var(--font-body)',
-                      fontSize:      '11px',
-                      fontWeight:    600,
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      color:         'var(--color-dark)',
-                      background:    formStatus === 'sending'
-                        ? 'var(--color-honey-dark)'
-                        : 'var(--color-honey)',
-                      border:       'none',
-                      borderRadius: '999px',
-                      padding:      '18px 40px',
-                      cursor:       formStatus === 'sending' ? 'wait' : 'pointer',
-                      boxShadow:    '0 4px 20px rgba(200,145,42,0.22), 0 1px 4px rgba(200,145,42,0.12)',
-                      transition:   'background 200ms ease, box-shadow 200ms ease, transform 150ms cubic-bezier(0.34,1.56,0.64,1)',
-                    }}
-                  >
-                    {formStatus === 'sending' ? 'Sending…' : 'Send Message →'}
-                  </button>
-
-                  {formStatus === 'error' && (
-                    <p style={{
-                      marginTop:  '14px',
-                      textAlign:  'center',
-                      fontFamily: 'var(--font-body)',
-                      fontSize:   '13px',
-                      color:      'var(--color-coral)',
-                      lineHeight: 1.6,
-                    }}>
-                      Something didn&apos;t go through — please try again or email us directly.
-                    </p>
-                  )}
-                </div>
-              </form>
-            )}
           </div>
         </section>
 

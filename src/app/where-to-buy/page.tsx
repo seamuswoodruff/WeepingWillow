@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 
 const STOCKISTS = [
   {
@@ -24,27 +23,6 @@ const STOCKISTS = [
 ]
 
 export default function WhereToBuyPage() {
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
-  const [formValues, setFormValues] = useState({
-    name: '', business: '', location: '', message: '',
-  })
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setFormStatus('sending')
-    const form = e.currentTarget
-    const data = new FormData(form)
-    try {
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-      })
-      setFormStatus('sent')
-    } catch {
-      setFormStatus('idle')
-    }
-  }
 
   return (
     <>
@@ -413,99 +391,32 @@ export default function WhereToBuyPage() {
           </div>
 
           <div>
-            {formStatus === 'sent' ? (
-              <div style={{
+            <form
+              name="wholesale-inquiry"
+              method="POST"
+              action="/wholesale/success"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              style={{
                 background: 'var(--color-bg-surface)',
-                border: '1px solid rgba(107,147,88,0.25)',
+                border: '1px solid var(--color-border-light)',
                 borderRadius: '20px',
-                padding: 'clamp(40px, 5vw, 60px)',
-                textAlign: 'center',
-                display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center',
-              }}>
-                <div style={{
-                  width: '52px', height: '52px', borderRadius: '999px',
-                  background: 'rgba(107,147,88,0.12)',
-                  border: '1px solid rgba(107,147,88,0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                </div>
-                <h3 style={{
-                  fontFamily: 'var(--font-heading)',
-                  fontSize: 'clamp(22px, 2.5vw, 30px)',
-                  fontWeight: 300, fontStyle: 'italic',
-                  color: 'var(--color-text-dark)', letterSpacing: '-0.01em',
-                }}>
-                  We&apos;ll be in touch.
-                </h3>
-                <p style={{
-                  fontFamily: 'var(--font-body)', fontSize: '14px',
-                  lineHeight: 1.7, color: 'var(--color-text-muted)',
-                  maxWidth: '320px',
-                }}>
-                  Thanks for reaching out. We look forward to learning more about your business and seeing if we&apos;re a good fit.
-                </p>
-              </div>
-            ) : (
-              <form
-                name="wholesale-inquiry"
-                method="POST"
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                onSubmit={handleSubmit}
-                style={{
-                  background: 'var(--color-bg-surface)',
-                  border: '1px solid var(--color-border-light)',
-                  borderRadius: '20px',
-                  padding: 'clamp(32px, 4vw, 48px)',
-                  display: 'flex', flexDirection: 'column', gap: '20px',
-                }}
-              >
-                <input type="hidden" name="form-name" value="wholesale-inquiry" />
-                <p style={{ display: 'none' }}>
-                  <label>Don&apos;t fill this out: <input name="bot-field" /></label>
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }} className="form__row">
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{
-                      fontFamily: 'var(--font-body)', fontSize: '11px',
-                      fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
-                      color: 'var(--color-text-muted)',
-                    }}>Your Name</label>
-                    <input type="text" name="name" required placeholder="[Name]"
-                      value={formValues.name}
-                      onChange={e => setFormValues(v => ({ ...v, name: e.target.value }))}
-                      style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-dark)', background: 'var(--color-bg-deep)', border: '1.5px solid var(--color-border)', borderRadius: '10px', padding: '12px 14px', outline: 'none', transition: 'border-color 180ms ease' }}
-                      onFocus={e => (e.target.style.borderColor = 'var(--color-honey)')}
-                      onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
-                    />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{
-                      fontFamily: 'var(--font-body)', fontSize: '11px',
-                      fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
-                      color: 'var(--color-text-muted)',
-                    }}>Business Name</label>
-                    <input type="text" name="business" required placeholder="[Business Name]"
-                      value={formValues.business}
-                      onChange={e => setFormValues(v => ({ ...v, business: e.target.value }))}
-                      style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-dark)', background: 'var(--color-bg-deep)', border: '1.5px solid var(--color-border)', borderRadius: '10px', padding: '12px 14px', outline: 'none', transition: 'border-color 180ms ease' }}
-                      onFocus={e => (e.target.style.borderColor = 'var(--color-honey)')}
-                      onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
-                    />
-                  </div>
-                </div>
+                padding: 'clamp(32px, 4vw, 48px)',
+                display: 'flex', flexDirection: 'column', gap: '20px',
+              }}
+            >
+              <input type="hidden" name="form-name" value="wholesale-inquiry" />
+              <p style={{ display: 'none' }}>
+                <label>Don&apos;t fill this out: <input name="bot-field" /></label>
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }} className="form__row">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{
                     fontFamily: 'var(--font-body)', fontSize: '11px',
                     fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
                     color: 'var(--color-text-muted)',
-                  }}>Location</label>
-                  <input type="text" name="location" required placeholder="City, State / Country"
-                    value={formValues.location}
-                    onChange={e => setFormValues(v => ({ ...v, location: e.target.value }))}
+                  }}>Your Name</label>
+                  <input type="text" name="name" required placeholder="[Name]"
                     style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-dark)', background: 'var(--color-bg-deep)', border: '1.5px solid var(--color-border)', borderRadius: '10px', padding: '12px 14px', outline: 'none', transition: 'border-color 180ms ease' }}
                     onFocus={e => (e.target.style.borderColor = 'var(--color-honey)')}
                     onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
@@ -516,34 +427,56 @@ export default function WhereToBuyPage() {
                     fontFamily: 'var(--font-body)', fontSize: '11px',
                     fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
                     color: 'var(--color-text-muted)',
-                  }}>Tell us about your business</label>
-                  <textarea name="message" required rows={4}
-                    placeholder="What do you sell, who are your customers, and why do you think Honeysuckle would be a good fit?"
-                    value={formValues.message}
-                    onChange={e => setFormValues(v => ({ ...v, message: e.target.value }))}
-                    style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-dark)', background: 'var(--color-bg-deep)', border: '1.5px solid var(--color-border)', borderRadius: '10px', padding: '12px 14px', outline: 'none', resize: 'vertical', transition: 'border-color 180ms ease', lineHeight: 1.65 }}
+                  }}>Business Name</label>
+                  <input type="text" name="business" required placeholder="[Business Name]"
+                    style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-dark)', background: 'var(--color-bg-deep)', border: '1.5px solid var(--color-border)', borderRadius: '10px', padding: '12px 14px', outline: 'none', transition: 'border-color 180ms ease' }}
                     onFocus={e => (e.target.style.borderColor = 'var(--color-honey)')}
                     onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
                   />
                 </div>
-                <button type="submit" disabled={formStatus === 'sending'}
-                  style={{
-                    fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
-                    letterSpacing: '0.12em', textTransform: 'uppercase',
-                    color: 'var(--color-dark)',
-                    background: formStatus === 'sending' ? 'var(--color-honey-dark)' : 'var(--color-honey)',
-                    padding: '14px 28px', borderRadius: '999px', border: 'none',
-                    cursor: formStatus === 'sending' ? 'default' : 'pointer',
-                    alignSelf: 'flex-start',
-                    transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
-                  }}
-                  onMouseEnter={e => { if (formStatus !== 'sending') { e.currentTarget.style.background = 'var(--color-honey-light)'; e.currentTarget.style.transform = 'translateY(-1px)' } }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--color-honey)'; e.currentTarget.style.transform = 'translateY(0)' }}
-                >
-                  {formStatus === 'sending' ? 'Sending…' : 'Send Inquiry'}
-                </button>
-              </form>
-            )}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={{
+                  fontFamily: 'var(--font-body)', fontSize: '11px',
+                  fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
+                  color: 'var(--color-text-muted)',
+                }}>Location</label>
+                <input type="text" name="location" required placeholder="City, State / Country"
+                  style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-dark)', background: 'var(--color-bg-deep)', border: '1.5px solid var(--color-border)', borderRadius: '10px', padding: '12px 14px', outline: 'none', transition: 'border-color 180ms ease' }}
+                  onFocus={e => (e.target.style.borderColor = 'var(--color-honey)')}
+                  onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
+                />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={{
+                  fontFamily: 'var(--font-body)', fontSize: '11px',
+                  fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
+                  color: 'var(--color-text-muted)',
+                }}>Tell us about your business</label>
+                <textarea name="message" required rows={4}
+                  placeholder="What do you sell, who are your customers, and why do you think Honeysuckle would be a good fit?"
+                  style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text-dark)', background: 'var(--color-bg-deep)', border: '1.5px solid var(--color-border)', borderRadius: '10px', padding: '12px 14px', outline: 'none', resize: 'vertical', transition: 'border-color 180ms ease', lineHeight: 1.65 }}
+                  onFocus={e => (e.target.style.borderColor = 'var(--color-honey)')}
+                  onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
+                />
+              </div>
+              <button type="submit"
+                style={{
+                  fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 600,
+                  letterSpacing: '0.12em', textTransform: 'uppercase',
+                  color: 'var(--color-dark)',
+                  background: 'var(--color-honey)',
+                  padding: '14px 28px', borderRadius: '999px', border: 'none',
+                  cursor: 'pointer',
+                  alignSelf: 'flex-start',
+                  transition: 'background 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1)',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'var(--color-honey-light)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'var(--color-honey)'; e.currentTarget.style.transform = 'translateY(0)' }}
+              >
+                Send Inquiry
+              </button>
+            </form>
           </div>
         </div>
       </section>
