@@ -194,13 +194,6 @@ export default function StockistMap({ stockists }: Props) {
     })
   }, [activeIndex])
 
-  const flyTo = (i: number) => {
-    const s = stockists[i]
-    leafletMapRef.current?.flyTo([s.lat, s.lng], 13, { duration: 0.9 })
-    markersRef.current[i]?.openPopup()
-    setActiveIndex(i)
-  }
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
       {/* Map container */}
