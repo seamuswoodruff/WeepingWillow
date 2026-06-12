@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 
 /* ── Shared style helpers ── */
@@ -64,11 +65,12 @@ export default function ContactPage() {
 
           {/* Willow icon glyph */}
           <div aria-hidden style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            <img
+            <Image
               src="/images/willow-icon.svg"
               alt=""
+              width={68}
+              height={68}
               style={{
-                width: '68px',
                 height: 'auto',
                 filter: 'invert(54%) sepia(28%) saturate(480%) hue-rotate(63deg) brightness(88%) contrast(85%) opacity(0.38)',
               }}

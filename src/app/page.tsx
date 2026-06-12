@@ -113,9 +113,11 @@ export default function Home() {
               background: 'radial-gradient(ellipse 70% 70% at 50% 55%, rgba(200,145,42,0.18) 0%, transparent 70%)',
               pointerEvents: 'none',
             }} />
-            <img
+            <Image
               src="/images/willow-icon.svg"
               alt="Weeping Willow Co."
+              width={480}
+              height={480}
               style={{
                 width: '100%',
                 maxWidth: 'clamp(260px, 36vw, 480px)',

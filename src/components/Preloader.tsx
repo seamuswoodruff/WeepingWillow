@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 const useIsomorphicLayoutEffect =
@@ -107,10 +108,12 @@ export default function Preloader() {
               : `transform 0.65s cubic-bezier(0.16,1,0.3,1), opacity 0.65s cubic-bezier(0.16,1,0.3,1)`,
           }}
         >
-          <img
+          <Image
             src="/images/willow-icon.svg"
             alt=""
             aria-hidden
+            width={210}
+            height={210}
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
         </div>

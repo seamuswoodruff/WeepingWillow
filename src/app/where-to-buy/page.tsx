@@ -2,23 +2,128 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import StockistMapDynamic from '@/components/StockistMapDynamic'
 
 const STOCKISTS = [
   {
     name: 'Morning Glory',
-    area: 'Brunswick, Maine',
+    area: 'Brunswick, ME',
     tag: 'Health Food Store',
     logo: '/images/stockist-morning-glory.png',
     href: 'https://www.moglonf.com',
-    overlayColor: 'rgba(20, 12, 4, 0.55)',
+    overlayColor: 'rgba(14, 28, 10, 0.55)',
+    lat: 43.9157,
+    lng: -69.9672,
   },
   {
     name: 'Brickyard Brands',
-    area: 'Portland, Maine',
+    area: 'Portland, ME',
     tag: 'Distributor',
     logo: '/images/stockist-brickyard-brands.png',
     href: 'https://www.brickyardbrands.com',
-    overlayColor: 'rgba(10, 6, 2, 0.45)',
+    overlayColor: 'rgba(10, 6, 2, 0.50)',
+    lat: null,
+    lng: null,
+  },
+  {
+    name: 'Dog Bar Jim',
+    area: 'Brunswick, ME',
+    tag: 'Coffee Shop',
+    logo: '/images/stockist-dog-bar-jim.jpg',
+    href: 'https://www.dogbarjim.com',
+    overlayColor: 'rgba(20, 10, 4, 0.55)',
+    lat: 43.9141,
+    lng: -69.9620,
+  },
+  {
+    name: 'Hilltop Superette',
+    area: 'Portland, ME',
+    tag: 'Neighborhood Grocer',
+    logo: '/images/stockist-hilltop-superette.png',
+    href: 'https://www.facebook.com/hilltopsuperette/',
+    overlayColor: 'rgba(8, 16, 8, 0.55)',
+    lat: 43.6629,
+    lng: -70.2511,
+  },
+  {
+    name: 'Street & Co.',
+    area: 'Portland, ME',
+    tag: 'Restaurant',
+    logo: '/images/stockist-street-and-co.png',
+    href: 'https://www.streetandcompany.net',
+    overlayColor: 'rgba(20, 8, 4, 0.60)',
+    lat: 43.6563,
+    lng: -70.2469,
+  },
+  {
+    name: 'Town Landing Market',
+    area: 'Falmouth, ME',
+    tag: 'Market',
+    logo: '/images/stockist-town-landing-market.webp',
+    href: 'https://www.townlandingmarket.com',
+    overlayColor: 'rgba(10, 18, 8, 0.55)',
+    lat: 43.7244,
+    lng: -70.2006,
+  },
+  {
+    name: 'Harpswell Corner Market',
+    area: 'Harpswell, ME',
+    tag: 'Market',
+    logo: '/images/stockist-harpswell-corner-market.png',
+    href: 'https://www.harpswellcornermarket.com',
+    overlayColor: 'rgba(6, 18, 14, 0.55)',
+    lat: 43.8018,
+    lng: -69.9876,
+  },
+  {
+    name: 'Higgins Beach Market',
+    area: 'Scarborough, ME',
+    tag: 'Market',
+    logo: '/images/stockist-higgins-beach-market.jpg',
+    href: 'https://www.higginsbeachmarket.com',
+    overlayColor: 'rgba(4, 14, 20, 0.55)',
+    lat: 43.5548,
+    lng: -70.3127,
+  },
+  {
+    name: 'China Lake Provisions',
+    area: 'China, ME',
+    tag: 'Deli & Grocery',
+    logo: '/images/stockist-china-lake-provisions.png',
+    href: 'https://chinalakeprovisions.com',
+    overlayColor: 'rgba(18, 12, 4, 0.55)',
+    lat: 44.4798,
+    lng: -69.5484,
+  },
+  {
+    name: 'Tipped Trailer Co.',
+    area: 'Newport, ME',
+    tag: 'Grocer',
+    logo: '/images/stockist-tipped-trailer-co.webp',
+    href: 'https://www.tippedtrailer.com',
+    overlayColor: 'rgba(20, 14, 4, 0.55)',
+    lat: 44.8373,
+    lng: -69.2739,
+  },
+  {
+    name: 'Bates College Store',
+    area: 'Lewiston, ME',
+    tag: 'Bookstore',
+    logo: '/images/stockist-bates-college-store.png',
+    href: 'https://www.facebook.com/batescollegestore/',
+    overlayColor: 'rgba(12, 8, 20, 0.55)',
+    lat: 44.1053,
+    lng: -70.2028,
+  },
+  {
+    name: 'Four Seasons Natural Foods',
+    area: 'Saratoga Springs, NY',
+    tag: 'Natural Foods',
+    logo: '/images/stockist-four-seasons-natural-foods.png',
+    href: 'https://www.fourseasonsnaturalfoods.com',
+    overlayColor: 'rgba(10, 20, 10, 0.55)',
+    lat: 43.0831,
+    lng: -73.7846,
   },
 ]
 
@@ -165,12 +270,16 @@ export default function WhereToBuyPage() {
             </p>
           </div>
 
-          {/* Stockist grid */}
+          {/* Stockist scroll row */}
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, minmax(0, clamp(200px, 26vw, 340px)))',
-            gap: 'clamp(16px, 2vw, 28px)',
+            display: 'flex',
+            gap: 'clamp(14px, 1.8vw, 22px)',
+            overflowX: 'auto',
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch' as const,
             marginBottom: '32px',
+            paddingBottom: '12px',
+            cursor: 'grab',
           }} className="stockists__grid">
             {STOCKISTS.map((s, i) => (
               <a
@@ -183,7 +292,9 @@ export default function WhereToBuyPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-end',
+                  flex: '0 0 clamp(200px, 26vw, 300px)',
                   aspectRatio: '1 / 1',
+                  scrollSnapAlign: 'start',
                   borderRadius: '20px',
                   overflow: 'hidden',
                   textDecoration: 'none',
@@ -295,7 +406,20 @@ export default function WhereToBuyPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          3. WHOLESALE / STOCKIST INQUIRY
+          3. INTERACTIVE MAP
+      ═══════════════════════════════════════════════════════════ */}
+      <section style={{
+        background: 'var(--color-bg-deep)',
+        padding: 'clamp(48px, 6vw, 72px) clamp(24px, 4vw, 48px)',
+        borderTop: '1px solid var(--color-border-light)',
+      }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <StockistMapDynamic stockists={STOCKISTS} />
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          4. WHOLESALE / STOCKIST INQUIRY
       ═══════════════════════════════════════════════════════════ */}
       <section style={{
         background: 'var(--color-bg-deep)',
@@ -571,7 +695,21 @@ export default function WhereToBuyPage() {
             min-height: 280px !important;
           }
           .stockists__grid {
-            grid-template-columns: minmax(0, 340px) !important;
+            scroll-snap-type: x mandatory;
+          }
+          .stockists__grid::-webkit-scrollbar {
+            height: 4px;
+          }
+          .stockists__grid::-webkit-scrollbar-track {
+            background: rgba(154,109,24,0.08);
+            border-radius: 999px;
+          }
+          .stockists__grid::-webkit-scrollbar-thumb {
+            background: rgba(200,145,42,0.35);
+            border-radius: 999px;
+          }
+          .stockists__grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(200,145,42,0.6);
           }
           .wholesale__grid {
             grid-template-columns: 1fr !important;
@@ -582,6 +720,7 @@ export default function WhereToBuyPage() {
           .stockist__header-note {
             text-align: left !important;
           }
+
         }
         .stockist-card__bg:hover {
           transform: scale(1.04);
