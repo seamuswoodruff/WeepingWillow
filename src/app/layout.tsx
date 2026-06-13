@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.weepingwillowco.com'),
+  metadataBase: new URL('https://www.drinkhoneysuckle.com'),
   title: {
     default: "Honeysuckle — Weeping Willow Co.",
     template: "%s | Weeping Willow Co.",
@@ -47,8 +47,8 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Weeping Willow Co.",
-  "url": "https://www.weepingwillowco.com",
-  "logo": "https://www.weepingwillowco.com/images/willow-icon.svg",
+  "url": "https://www.drinkhoneysuckle.com",
+  "logo": "https://www.drinkhoneysuckle.com/images/willow-icon.svg",
   "description": "Weeping Willow Co. makes Honeysuckle, a premium non-alcoholic cocktail crafted with honey, lemon, ginger, and gentian bitters.",
   "foundingDate": "2024",
   "founders": [

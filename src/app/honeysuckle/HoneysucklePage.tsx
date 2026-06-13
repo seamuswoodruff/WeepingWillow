@@ -108,13 +108,13 @@ export default function HoneysucklePage() {
     "name": "Honeysuckle",
     "brand": { "@type": "Brand", "name": "Weeping Willow Co." },
     "description": "A premium non-alcoholic cocktail with honey, lemon juice, ginger juice, and gentian bitters. 12 fl oz cans.",
-    "image": "https://www.weepingwillowco.com/images/product-hero.webp",
+    "image": "https://www.drinkhoneysuckle.com/images/product-hero.webp",
     "category": "Non-Alcoholic Beverage",
     "offers": {
       "@type": "Offer",
       "availability": "https://schema.org/InStock",
       "priceCurrency": "USD",
-      "url": "https://www.weepingwillowco.com/honeysuckle"
+      "url": "https://www.drinkhoneysuckle.com/honeysuckle"
     }
   }
 
