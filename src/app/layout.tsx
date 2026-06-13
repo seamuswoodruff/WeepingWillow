@@ -34,8 +34,11 @@ export const metadata: Metadata = {
     images: ['/images/og-default.jpg'],
   },
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-icon.png',
+    icon: [
+      { url: '/favicon.png', sizes: '192x192', type: 'image/png' },
+      { url: '/images/willow-icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/favicon.png',
   },
   robots: {
     index: true,
